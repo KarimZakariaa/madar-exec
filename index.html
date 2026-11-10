@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Mustafa Saad">
+<meta name="description" content="مدار · اللوحات التنفيذية: لوحة القيادة التنفيذية و22 لوحة موديولات ضمن نظام مدار، بالعربية والإنجليزية، فاتح وداكن">
+<title>اللوحات التنفيذية · Madar</title>
+<link rel="icon" href="assets/madar-logo.svg">
+<link rel="stylesheet" href="app/app.css">
+<link rel="stylesheet" href="exec/dashboards.css">
+<link rel="stylesheet" href="exec/exec.css">
+<script>(function(){try{var t=localStorage.getItem("madar-theme"),l=localStorage.getItem("madar-lang");if(t==="dark")document.documentElement.setAttribute("data-theme","dark");if(l!=="en"){document.documentElement.lang="ar";document.documentElement.dir="rtl";document.documentElement.style.setProperty("--dirx","-1");}else{document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}})();</script>
+</head>
+<body>
+<div class="bg-dots" aria-hidden="true"></div>
+<div class="bg-aurora" aria-hidden="true"></div>
+<div class="md-app" id="app">
+<script>/* MAD-HSD-618 · full-screen screens (sign in, company picker, password reset) start full, so the first paint does not shift when app.js routes; with the menu hidden, their fonts are asked for at once (as the menu text did), so the board does not reflow when they arrive */(function(){var p=(location.hash||"").replace(/^#\/?/,"").split("/");if(p[0]==="signin"||(p[0]==="sys"&&/^(signin|pick|forgot)$/.test(p[1]||"signin"))){document.getElementById("app").className+=" full";["Cairo","Tajawal-Regular","Tajawal-Medium"].forEach(function(f){(document.documentElement.lang==="ar"?["lat","ar"]:["lat"]).forEach(function(x){var l=document.createElement("link");l.rel="preload";l.as="font";l.type="font/woff2";l.crossOrigin="anonymous";l.href="assets/fonts/"+f+"-"+x+".woff2";document.head.appendChild(l);});});}})();</script>
+  <div class="side-slot"><aside class="side" aria-label="Main menu">
+    <nav class="rail" aria-label="Main menu">
+      <a class="rail-logo" href="#/hm" title="Home"><img src="app/assets/1bbe871eae89b7f7165e5a643cd57221.svg" alt="Madar"></a>
+      <div id="rail-icons" class="rail-icons"></div>
+      <div class="me-wrap">
+        <button type="button" class="me" id="me" aria-haspopup="menu" aria-expanded="false" aria-controls="pop" aria-label="Mustafa Saad" title="Mustafa Saad"><span class="av" data-no-tr>MS</span></button>
+      </div>
+      <!-- MAD-HSD-575 · the fly-out: logo, "Find a page or tab" search, recent pages, two grouped columns, keyboard hints and counts -->
+      <div class="rail-fly" aria-label="Full menu">
+        <div class="fly-head" id="fly-head"><a class="fly-logo" href="#/hm" tabindex="-1"><img src="app/assets/1bbe871eae89b7f7165e5a643cd57221.svg" alt="Madar"></a>
+          <label class="md-fs"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14M20 20l-4-4"></path></svg><input id="fly-q" type="search" autocomplete="off" spellcheck="false" placeholder="Find a page or tab" aria-label="Find a page or tab"><kbd aria-hidden="true">/</kbd></label>
+          <div class="md-fmode" id="fly-mode" role="radiogroup" aria-label="Menu view"></div>
+        </div>
+        <div class="md-recent" id="fly-recent"></div>
+        <div class="fly-cols" id="menu"></div>
+        <div class="md-ffoot" id="fly-foot"></div>
+      </div>
+    </nav>
+  </aside></div>
+  <div class="stage-wrap">
+    <div id="stage"></div>
+  </div>
+</div>
+<div class="md-scrim" id="scrim" aria-hidden="true"></div>
+<!-- MAD-HSD-579 · notifications: one panel for the bell of every board (a sheet on phones) -->
+<div class="md-nt" id="nt" hidden>
+  <div class="md-nt-back" id="nt-back"></div>
+  <div class="md-nt-box" id="nt-box" role="dialog" aria-modal="true" aria-labelledby="nt-h"></div>
+</div>
+<!-- MAD-HSD-593 · pane settings: the popover of the gear in every side pane (saved on this device, applies to every pane) -->
+<div class="md-pp" id="mp-pop" role="dialog" aria-modal="false" hidden></div>
+<!-- MAD-HSD-596 · the user pane (from the avatar or Alt U): a double-glass side pane on the start side, next to the rail -->
+<div class="md-up" id="pop" hidden><div class="md-up-back" id="up-back"></div><aside class="md-up-box" id="up-box" role="dialog" aria-modal="true" aria-labelledby="up-h"></aside></div>
+<!-- MAD-HSD-596 · keyboard shortcuts (? anywhere) and the shortcut toast -->
+<div class="md-kb" id="md-kb" role="dialog" aria-modal="true" aria-labelledby="kb-h" hidden></div>
+<div class="md-toast" id="md-toast" role="status" aria-live="polite"></div>
+<!-- MAD-HSD-575 · quick search (Ctrl K or /): pages and tabs, then pilgrims, then records -->
+<div class="md-qp" id="qp" hidden>
+  <div class="md-qp-back" id="qp-back"></div>
+  <div class="md-qp-box" role="dialog" aria-modal="true" aria-labelledby="qp-q">
+    <label class="md-qp-in"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14M20 20l-4-4"></path></svg><input id="qp-q" type="search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="qp-list" aria-label="Search"><kbd id="qp-esc">Esc</kbd></label>
+    <div class="md-qp-list" id="qp-list" role="listbox"></div>
+    <div class="md-qp-foot" id="qp-foot"></div>
+  </div>
+</div>
+<button type="button" class="md-burger" id="burger" aria-label="Menu" title="Menu" data-ar-title="القائمة"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+<div class="splash" id="loading" aria-hidden="true">
+  <!-- MAD-HSD-596 · Aurora, like sign in: the sign-in glows, aurora band and silk, in the palette colours (app.css) -->
+  <div class="lys" aria-hidden="true"><i class="base"></i><i class="ly ga"></i><i class="ly gb"></i><i class="ly sa"></i><i class="ly sb"></i><i class="ly au"></i></div>
+  <img class="splash-logo" src="assets/madar-logo-white.svg" alt="">
+  <div class="splash-tag">مدار · MADAR ADMIN</div>
+</div>
+<!-- MAD-EXEC · the other Madar pages are read from the live design site; the executive dashboards (exec/) are local -->
+<script>window.MADAR_REMOTE="https://gama-ksa.github.io/madar-new-design/";</script>
+<script src="app/madar-runtime.js"></script>
+<script src="app/md-color.js"></script>
+<script src="app/pages-data.js"></script>
+<script src="app/menu.js"></script>
+<script>/* MAD-HSD-618 · the Arabic dictionary (1.7 MB) only when Arabic is on; in English app/i18n.js loads it when needed */if(document.documentElement.lang==="ar")document.write('<script src="app/i18n-ar.js"><\/script>');</script>
+<script src="app/i18n.js"></script>
+<script src="exec/markup.js"></script>
+<script src="exec/exec-shell.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,804 @@
+/* MAD-HSD-503 · Madar design site shell · Mustafa Saad   
+   MAD-HSD-570 · English and Arabic (right to left), light and dark (Madar D1 Dark-1-Sand), the page scrolls (no scroll boxes
+   inside pages, side panes stay on screen), the menu is a drawer on phones. Shell colours are tokens below; the pages
+   are darkened as they draw by app/md-color.js. */
+/* MAD-HSD-618 · fonts in two lossless parts (fontTools, all features and variations kept): Latin and Arabic, by unicode-range, so a page loads only the part its text uses */
+@font-face{font-family:Cairo;src:url(../assets/fonts/Cairo-lat.woff2) format('woff2'),url(../assets/fonts/Cairo.ttf) format('truetype');font-weight:200 1000;font-display:swap;unicode-range:U+0010,U+0020-007E,U+00A0-0131,U+0134-0137,U+0139-013E,U+0141-0148,U+014A-017E,U+0192,U+01FA-01FF,U+0218-021B,U+0237,U+02BB-02BC,U+02C6-02C7,U+02D8-02DD,U+03C0,U+1E80-1E85,U+1EAB,U+1EB0,U+1EC5,U+1ED7,U+1EF2-1EF3,U+1EF8-1EF9,U+2013-2014,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2030,U+2039-203A,U+2044,U+2070,U+2074-2079,U+2080-2089,U+20AC,U+2122,U+2126,U+2202,U+2206,U+220F,U+2211-2212,U+2215,U+221A,U+221E,U+222B,U+2248,U+2260,U+2264-2265,U+25CA,U+F6BE,U+F6C3}
+@font-face{font-family:Cairo;src:url(../assets/fonts/Cairo-ar.woff2) format('woff2'),url(../assets/fonts/Cairo.ttf) format('truetype');font-weight:200 1000;font-display:swap;unicode-range:U+060C-060D,U+0615,U+061B,U+061F,U+0621-063A,U+0640-0656,U+0658,U+0660-0671,U+0679,U+067E,U+0686,U+0688,U+0691,U+0698,U+06A1,U+06A4,U+06A9,U+06AF,U+06BA,U+06BE,U+06C1-06C3,U+06CC,U+06D2-06D4,U+06F0-06F9,U+FB51,U+FB57-FB59,U+FB67-FB69,U+FB6B-FB6D,U+FB7B-FB7D,U+FB89,U+FB8B,U+FB8D,U+FB8F-FB91,U+FB93-FB95,U+FB9F,U+FBA7-FBA9,U+FBAB-FBAD,U+FBAF,U+FBB1-FBB9,U+FBBD-FBBE,U+FBE8-FBE9,U+FBFD-FBFF,U+FC43-FC44,U+FC64-FC65,U+FC67-FC6B,U+FC6D-FC71,U+FC73-FC77,U+FC79-FC7B,U+FC86-FC87,U+FC8A-FC8B,U+FC8D-FC8F,U+FC91-FC92,U+FC94,U+FC96,U+FCFB-FCFE,U+FD05-FD08,U+FD0D-FD10,U+FD17-FD1A,U+FD21-FD24,U+FD29-FD2C,U+FD3E-FD3F,U+FDF2,U+FE82,U+FE84,U+FE86,U+FE88,U+FE8A-FE8C,U+FE8E,U+FE90-FE92,U+FE94,U+FE96-FE98,U+FE9A-FE9C,U+FE9E-FEA0,U+FEA2-FEA4,U+FEA6-FEA8,U+FEAA,U+FEAC,U+FEAE,U+FEB0,U+FEB2-FEB4,U+FEB6-FEB8,U+FEBA-FEBC,U+FEBE-FEC0,U+FEC2-FEC4,U+FEC6-FEC8,U+FECA-FECC,U+FECE-FED0,U+FED2-FED4,U+FED6-FED8,U+FEDA-FEDC,U+FEDE-FEE0,U+FEE2-FEE4,U+FEE6-FEE8,U+FEEA-FEEC,U+FEEE,U+FEF0,U+FEF2-FEFC}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Regular-lat.woff2) format('woff2'),url(../assets/fonts/Tajawal-Regular.ttf) format('truetype');font-weight:400;font-display:swap;unicode-range:U+0020-007E,U+00A0-00AC,U+00AE-00FF,U+0131,U+0141-0142,U+0152-0153,U+0160-0161,U+0178,U+017D-017E,U+0192,U+02C6-02C7,U+02D8-02DD,U+03C0,U+2002-200A,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2030,U+2039-203A,U+2044,U+20AC,U+2122,U+2126,U+2202,U+2206,U+220F,U+2211-2212,U+221A,U+221E,U+222B,U+2248,U+2260,U+2264-2265,U+25CC,U+E028,U+E030,U+E03D-E03E,U+E800,U+FB00-FB03}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Regular-ar.woff2) format('woff2'),url(../assets/fonts/Tajawal-Regular.ttf) format('truetype');font-weight:400;font-display:swap;unicode-range:U+060C,U+061B,U+061F,U+0621-063A,U+0640-0655,U+0660-066A,U+066D-066E,U+0670,U+067E,U+06A4,U+2011,U+FB57-FB59,U+FB6B-FB6D,U+FBB2-FBB7,U+FBE8-FBE9,U+FC59-FC5A,U+FC5E-FC63,U+FC95-FC96,U+FD3E-FD3F,U+FDF2,U+FE82,U+FE84,U+FE86,U+FE88,U+FE8A-FE8C,U+FE8E,U+FE90-FE92,U+FE94,U+FE96-FE98,U+FE9A-FE9C,U+FE9E-FEA0,U+FEA2-FEA4,U+FEA6-FEA8,U+FEAA,U+FEAC,U+FEAE,U+FEB0,U+FEB2-FEB4,U+FEB6-FEB8,U+FEBA-FEBC,U+FEBE-FEC0,U+FEC2-FEC4,U+FEC6-FEC8,U+FECA-FECC,U+FECE-FED0,U+FED2-FED4,U+FED6-FED8,U+FEDA-FEDC,U+FEDE-FEE0,U+FEE2-FEE4,U+FEE6-FEE8,U+FEEA-FEEC,U+FEEE,U+FEF0,U+FEF2-FEFC}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Medium-lat.woff2) format('woff2'),url(../assets/fonts/Tajawal-Medium.ttf) format('truetype');font-weight:500;font-display:swap;unicode-range:U+0020-007E,U+00A0-00AC,U+00AE-00FF,U+0131,U+0141-0142,U+0152-0153,U+0160-0161,U+0178,U+017D-017E,U+0192,U+02C6-02C7,U+02D8-02DD,U+03C0,U+2002-200A,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2030,U+2039-203A,U+2044,U+20AC,U+2122,U+2126,U+2202,U+2206,U+220F,U+2211-2212,U+221A,U+221E,U+222B,U+2248,U+2260,U+2264-2265,U+25CC,U+E028,U+E030,U+E033-E03B,U+E03D-E03E,U+E800,U+FB00-FB03}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Medium-ar.woff2) format('woff2'),url(../assets/fonts/Tajawal-Medium.ttf) format('truetype');font-weight:500;font-display:swap;unicode-range:U+060C,U+061B,U+061F,U+0621-063A,U+0640-0655,U+0660-066A,U+066D-066E,U+0670,U+067E,U+06A4,U+2011,U+FB57-FB59,U+FB6B-FB6D,U+FBB2-FBB7,U+FBE8-FBE9,U+FC59-FC5A,U+FC5E-FC63,U+FC95-FC96,U+FD3E-FD3F,U+FDF2,U+FE82,U+FE84,U+FE86,U+FE88,U+FE8A-FE8C,U+FE8E,U+FE90-FE92,U+FE94,U+FE96-FE98,U+FE9A-FE9C,U+FE9E-FEA0,U+FEA2-FEA4,U+FEA6-FEA8,U+FEAA,U+FEAC,U+FEAE,U+FEB0,U+FEB2-FEB4,U+FEB6-FEB8,U+FEBA-FEBC,U+FEBE-FEC0,U+FEC2-FEC4,U+FEC6-FEC8,U+FECA-FECC,U+FECE-FED0,U+FED2-FED4,U+FED6-FED8,U+FEDA-FEDC,U+FEDE-FEE0,U+FEE2-FEE4,U+FEE6-FEE8,U+FEEA-FEEC,U+FEEE,U+FEF0,U+FEF2-FEFC}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Bold-lat.woff2) format('woff2'),url(../assets/fonts/Tajawal-Bold.ttf) format('truetype');font-weight:700;font-display:swap;unicode-range:U+0020-007E,U+00A0-00AC,U+00AE-00FF,U+0131,U+0141-0142,U+0152-0153,U+0160-0161,U+0178,U+017D-017E,U+0192,U+02C6-02C7,U+02D8-02DD,U+03C0,U+2002-200A,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2030,U+2039-203A,U+2044,U+20AC,U+2122,U+2126,U+2202,U+2206,U+220F,U+2211-2212,U+221A,U+221E,U+222B,U+2248,U+2260,U+2264-2265,U+25CC,U+E028,U+E030,U+E033-E03B,U+E03D-E03E,U+E800,U+FB00-FB03}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-Bold-ar.woff2) format('woff2'),url(../assets/fonts/Tajawal-Bold.ttf) format('truetype');font-weight:700;font-display:swap;unicode-range:U+060C,U+061B,U+061F,U+0621-063A,U+0640-0655,U+0660-066A,U+066D-066E,U+0670,U+067E,U+06A4,U+2011,U+FB57-FB59,U+FB6B-FB6D,U+FBB2-FBB7,U+FBE8-FBE9,U+FC59-FC5A,U+FC5E-FC63,U+FC95-FC96,U+FD3E-FD3F,U+FDF2,U+FE82,U+FE84,U+FE86,U+FE88,U+FE8A-FE8C,U+FE8E,U+FE90-FE92,U+FE94,U+FE96-FE98,U+FE9A-FE9C,U+FE9E-FEA0,U+FEA2-FEA4,U+FEA6-FEA8,U+FEAA,U+FEAC,U+FEAE,U+FEB0,U+FEB2-FEB4,U+FEB6-FEB8,U+FEBA-FEBC,U+FEBE-FEC0,U+FEC2-FEC4,U+FEC6-FEC8,U+FECA-FECC,U+FECE-FED0,U+FED2-FED4,U+FED6-FED8,U+FEDA-FEDC,U+FEDE-FEE0,U+FEE2-FEE4,U+FEE6-FEE8,U+FEEA-FEEC,U+FEEE,U+FEF0,U+FEF2-FEFC}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-ExtraBold-lat.woff2) format('woff2'),url(../assets/fonts/Tajawal-ExtraBold.ttf) format('truetype');font-weight:800;font-display:swap;unicode-range:U+0020-007E,U+00A0-00AC,U+00AE-00FF,U+0131,U+0141-0142,U+0152-0153,U+0160-0161,U+0178,U+017D-017E,U+0192,U+02C6-02C7,U+02D8-02DD,U+03C0,U+2002-200A,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2030,U+2039-203A,U+2044,U+20AC,U+2122,U+2126,U+2202,U+2206,U+220F,U+2211-2212,U+221A,U+221E,U+222B,U+2248,U+2260,U+2264-2265,U+25CC,U+E028,U+E030,U+E03D-E03E,U+E800,U+FB00-FB03}
+@font-face{font-family:Tajawal;src:url(../assets/fonts/Tajawal-ExtraBold-ar.woff2) format('woff2'),url(../assets/fonts/Tajawal-ExtraBold.ttf) format('truetype');font-weight:800;font-display:swap;unicode-range:U+060C,U+061B,U+061F,U+0621-063A,U+0640-0655,U+0660-066A,U+066D-066E,U+0670,U+067E,U+06A4,U+2011,U+FB57-FB59,U+FB6B-FB6D,U+FBB2-FBB7,U+FBE8-FBE9,U+FC59-FC5A,U+FC5E-FC63,U+FC95-FC96,U+FD3E-FD3F,U+FDF2,U+FE82,U+FE84,U+FE86,U+FE88,U+FE8A-FE8C,U+FE8E,U+FE90-FE92,U+FE94,U+FE96-FE98,U+FE9A-FE9C,U+FE9E-FEA0,U+FEA2-FEA4,U+FEA6-FEA8,U+FEAA,U+FEAC,U+FEAE,U+FEB0,U+FEB2-FEB4,U+FEB6-FEB8,U+FEBA-FEBC,U+FEBE-FEC0,U+FEC2-FEC4,U+FEC6-FEC8,U+FECA-FECC,U+FECE-FED0,U+FED2-FED4,U+FED6-FED8,U+FEDA-FEDC,U+FEDE-FEE0,U+FEE2-FEE4,U+FEE6-FEE8,U+FEEA-FEEC,U+FEEE,U+FEF0,U+FEF2-FEFC}
+
+:root{--side:280px;--rail:76px;--ink:#2C2111;--muted:#666056;--accent:#8A6424;--deep:#3A2C17;--line:#EDECEA;
+  --page:#F5F4F3;--dots:#3A2C172B;--aurora:.42;--glass:#FFFFFF57;--glass-b:#FFFFFFB3;--float:#FFFFFFEB;--pop:#FFFFFFF7;--tile:#FFFFFFE0;--hover:#FFFFFF66;--hover2:#FFFFFF80;
+  --field:#F8F8F7F2;--field-b:#DFDDDA;--btn:#FFFFFF9E;--btn-b:#FFFFFFF2;--on:#3A2C17;--on-ink:#FFFFFF;--soft:#F6F3ED;--branch:#E6DCCB;--fly1:#FFFFFFF5;--fly2:#FFFFFFEB;--fly-b:#FFFFFFE6;--gtile:#FBF0D5;--deep2:#3A2C17;--shadow:#231A0E;--scroll:#C8C4BE;--red:#B23434}
+:root[data-theme="dark"]{color-scheme:dark;--ink:#EEF3F2;--muted:#C4C0B9;--accent:#E0AE4A;--deep:#E0AE4A;--line:#2E281E;
+  --page:#0E0B06;--dots:#E0AE4A1A;--aurora:.3;--glass:#FFFFFF0E;--glass-b:#FFFFFF29;--float:#1A140AF2;--pop:#1A140AFA;--tile:#FFFFFF14;--hover:#FFFFFF0F;--hover2:#FFFFFF14;
+  --field:#140F08B3;--field-b:#3F3A31;--btn:#FFFFFF0D;--btn-b:#E0AE4A38;--on:#E0AE4A;--on-ink:#1A140A;--soft:#2A2216;--branch:#3F3A31;--fly1:#1A140AF5;--fly2:#1A140AEB;--fly-b:#FFFFFF1F;--gtile:#423317;--deep2:#EDEFEE;--shadow:#000000;--scroll:#5F5A54;--red:#F07A7A}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--page);transition:background-color .3s;color:var(--ink);font:14px/1.45 Tajawal,system-ui,sans-serif;overflow:hidden}
+.bg-dots{position:fixed;inset:0;background-image:radial-gradient(var(--dots) 1.2px,transparent 1.4px);background-size:26px 26px;pointer-events:none}
+.bg-aurora{position:fixed;left:-6%;right:-6%;top:0;height:420px;background:var(--md-grad,linear-gradient(90deg,#E0AE4A 0%,#EC9364 50%,#CC86AD 100%));opacity:var(--aurora);-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 45%,transparent 100%);pointer-events:none}
+
+/* layout */
+.md-app{position:relative;display:flex;height:100vh;height:100dvh}
+.md-app.full .side-slot{display:none}
+.stage-wrap{flex:1 1 0;min-width:0;height:100%;position:relative;overflow:auto}
+/* MAD-HSD-570 · the page never scrolls sideways: boards take the window width (fluid), and grow in height with their content */
+#stage{width:100%;min-height:100%;min-width:0}
+.stage-wrap{overflow-x:hidden;overflow-y:auto}
+.md-app.full #stage{min-height:0;min-width:0}
+/* side panes, their scrim and toasts stay on screen while the page scrolls */
+#stage aside.panel,#stage .ah>button[aria-label="Close panel"]{position:fixed!important}
+#stage aside[style*="position: absolute"][style*="bottom:"],#stage .dw[style*="position: absolute"],#stage .kp[style*="position: absolute"]{position:fixed!important}
+#stage button[aria-label="Close panel"][style*="inset: 0"],#stage div[aria-hidden="true"][onclick][style*="inset: 0"],#stage div[aria-hidden="true"][style*="inset: 0"][style*="z-index: 8"],#stage div[aria-hidden="true"][style*="inset: 0"][style*="z-index: 9"]{position:fixed!important}
+/* Dashboards: the site menu replaces the board's own rail */
+#stage .dbx-host nav.rail{display:none!important}
+
+/* MAD-HSD-570 · side menu = the approved engine rail (68px icons) and its fly-out (940px, three columns), shared by every page */
+.side-slot{position:relative;flex-shrink:0;width:84px}
+.side{position:absolute;inset-inline-start:0;top:0;bottom:0;z-index:86;padding-block:16px;padding-inline-start:16px}
+.side .rail{position:relative;z-index:86;width:68px;height:100%;border-radius:22px;padding:8px;background:var(--glass);border:1px solid var(--glass-b);display:flex;flex-direction:column;gap:4px;box-sizing:border-box}
+.side .rail-logo{height:52px;border-radius:14px;background:linear-gradient(90deg,#7A5219 0%,#9C4F2C 52%,#6B3760 100%);display:flex;align-items:center;justify-content:center;margin-bottom:4px;overflow:hidden;flex-shrink:0}
+.side .rail-logo img{height:24px;width:auto}
+.side .rail-icons{display:flex;flex-direction:column;gap:4px;min-height:0;overflow:hidden}
+.side .rail-icons a{height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;transition:translate .14s ease,background-color .16s ease}
+.side .rail-icons a.cur{background:var(--tile);color:var(--accent)}
+@media (hover:hover){.side .rail-icons a:hover{translate:0 -1px;background:var(--tile)}}
+.side .rail-logo,.side .fly-logo{background:var(--md-silk,linear-gradient(90deg,#7A5219 0%,#9C4F2C 52%,#6B3760 100%))}
+.side .me-wrap{margin-top:auto;align-self:center;flex-shrink:0}
+.side .rail .me{width:38px;height:38px;border-radius:12px;border:0;padding:0;background:var(--md-grad,linear-gradient(90deg,#E0AE4A,#EC9364,#CC86AD));display:grid;place-items:center;cursor:pointer;position:relative;z-index:4;transition:box-shadow .2s ease,translate .14s ease}
+@media (hover:hover){.side .rail .me:hover{translate:0 -1px}}
+.side .rail .me[aria-expanded="true"]{box-shadow:0 0 0 2px var(--page),0 0 0 4px var(--accent)}
+.side .av{font:800 13px Cairo,sans-serif;color:#2C2111}
+/* MAD-HSD-575 · user-tile menu: opens beside the rail, from the avatar */
+.side .md-um{position:absolute;inset-inline-start:calc(100% + 12px);bottom:0;width:300px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;scrollbar-width:thin;border-radius:22px;background:var(--pop);border:1px solid var(--btn-b);box-shadow:0 30px 70px -30px var(--shadow);backdrop-filter:blur(18px);padding:10px;display:none;flex-direction:column;gap:2px;z-index:90;text-align:start;color:var(--ink);font:14px/1.4 Tajawal,sans-serif}
+.side .md-um.open{display:flex;animation:md-um-in .26s cubic-bezier(.16,1,.3,1)}
+@keyframes md-um-in{from{opacity:0;transform:translateX(calc(var(--dirx,1) * -10px))}to{opacity:1;transform:none}}
+.side .md-um hr{border:0;border-top:1px solid var(--line);margin:6px 8px;flex-shrink:0}
+.side .md-um button{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer;flex-shrink:0}
+.side .md-um-who{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:8px 10px;border-radius:12px;text-align:start}
+.side .md-um-who b{font:800 16px/1.25 Cairo,sans-serif;color:var(--ink)}
+.side .md-um-who span{font-size:12.5px;color:var(--muted)}
+.side .md-um-lbl{display:flex;align-items:center;gap:8px;padding:6px 10px 2px;font:700 11.5px Tajawal,sans-serif;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.side .md-um-lbl i{margin-inline-start:auto;font-style:normal;letter-spacing:0;text-transform:none;color:var(--accent);font-size:12px}
+.side .md-um-co{display:flex;flex-direction:column;padding:2px 10px 4px;line-height:1.35}
+.side .md-um-co b{font:800 14.5px Cairo,sans-serif;color:var(--ink)}
+.side .md-um-co span{font-size:12.5px;color:var(--muted)}
+.side .md-um-row{height:42px;padding:0 10px;border-radius:12px;display:flex;align-items:center;gap:12px;font:700 14px Tajawal,sans-serif!important;color:var(--ink)!important;text-align:start}
+.side .md-um-row svg{color:var(--deep);flex-shrink:0}
+.side .md-um-row.red,.side .md-um-row.red svg{color:var(--red)!important}
+.side .md-um-who:hover,.side .md-um-row:hover,.side .md-um button:focus-visible{background:var(--soft);outline:0}
+[dir="rtl"] .side .md-out{transform:scaleX(-1)}
+.side .md-um-sw{display:grid;grid-template-columns:repeat(4,34px);justify-content:space-between;row-gap:10px;padding:8px 14px 10px}
+.side .md-um-sw button{width:34px;height:34px;border-radius:50%;padding:0;box-shadow:inset 0 0 0 1px #0000001F;transition:transform .15s ease,box-shadow .15s ease}
+@media (hover:hover){.side .md-um-sw button:hover{transform:scale(1.08)}}
+.side .md-um-sw button.on{box-shadow:0 0 0 2px var(--pop),0 0 0 4px var(--accent)}
+.side .md-um-sw button:focus-visible{background:inherit;box-shadow:0 0 0 2px var(--pop),0 0 0 4px var(--muted)}
+.side .md-seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 10px 6px;padding:4px;border-radius:12px;background:var(--soft);flex-shrink:0}
+.side .md-seg button{height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:7px;font:700 13px Tajawal,sans-serif;color:var(--muted);transition:background-color .18s ease,color .18s ease}
+.side .md-seg button.on{background:var(--on);color:var(--on-ink);box-shadow:0 6px 16px -10px var(--shadow)}
+/* the fly-out: same look and motion as the boards' .rail-fly (opens on hover or keyboard focus, closes when the pointer leaves) */
+.side .rail-fly{position:absolute;z-index:3;inset-inline-start:0;top:0;bottom:0;width:min(940px,calc(100vw - 32px));border-radius:22px;background:linear-gradient(180deg,var(--fly1),var(--fly2));border:1px solid var(--fly-b);backdrop-filter:blur(22px);box-shadow:0 30px 70px -30px var(--shadow);padding:14px 18px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;overflow:hidden;
+  opacity:0;visibility:hidden;pointer-events:none;translate:calc(var(--dirx,1) * -10px) 0;transition:opacity .16s ease .1s,translate .18s ease .1s,visibility 0s linear .3s}
+.side .rail:hover .rail-fly,.side .rail:focus-within .rail-fly{opacity:1;visibility:visible;pointer-events:auto;translate:0 0;transition:opacity .16s ease .12s,translate .18s ease .12s,visibility 0s linear 0s}
+/* MAD-HSD-578 · the fly-out ends above the user tile (rail padding 8 + avatar 38 + gap 8), so the avatar is never covered and always
+   takes the click; pointing at or focusing the tile closes the fly-out, and the user menu sits above it */
+@media (min-width:901px){.side .rail-fly{bottom:54px}}
+@media (min-width:901px){.side .rail:has(.md-um.open) .rail-fly,.side .rail:has(.me-wrap:hover) .rail-fly,.side .rail:has(.me-wrap:focus-within) .rail-fly,.side .rail.md-flyx .rail-fly{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .12s ease,visibility 0s linear .12s}}
+.side .fly-head{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.side .fly-logo{height:44px;padding:0 14px;border-radius:13px;display:flex;align-items:center;flex-shrink:0}
+.side .fly-logo img{height:21px;width:auto}
+.side .md-fs{flex:1 1 auto;min-width:0;height:44px;display:flex;align-items:center;gap:10px;padding-inline:14px 8px;border-radius:14px;background:var(--field);border:1px solid var(--field-b);color:var(--accent);cursor:text;transition:border-color .15s ease,box-shadow .15s ease}
+.side .md-fs:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.side .md-fs svg{flex-shrink:0}
+.side .md-fs input,.md-qp-in input{flex:1 1 auto;min-width:0;height:100%;border:0;outline:0;background:transparent;font:500 14.5px Tajawal,sans-serif;color:var(--ink);padding:0;-webkit-appearance:none;appearance:none}
+.side .md-fs input::placeholder,.md-qp-in input::placeholder{color:var(--muted);opacity:1}
+.side .md-fs input::-webkit-search-cancel-button,.md-qp-in input::-webkit-search-cancel-button{display:none}
+.side kbd,.md-qp kbd,md-qs.md-qs kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:7px;background:var(--tile);border:1px solid var(--field-b);box-shadow:0 1px 0 var(--field-b);font:700 11.5px/1 Tajawal,sans-serif;color:var(--muted);direction:ltr;unicode-bidi:isolate;flex-shrink:0}
+.side .md-recent{display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.side .md-recent[hidden]{display:none}
+.side .md-chip,.md-qp .md-chip{display:inline-flex;align-items:center;gap:6px;height:30px;max-width:230px;padding:0 12px;border-radius:999px;background:var(--tile);border:1px solid var(--btn-b);font:700 12.5px Tajawal,sans-serif;color:var(--deep2);text-decoration:none;cursor:pointer;transition:background-color .14s ease,color .14s ease}
+.side .md-chip svg,.md-qp .md-chip svg{color:var(--muted);flex-shrink:0}
+.side .md-chip span,.md-qp .md-chip span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side .md-chip:hover,.side .md-chip:focus-visible,.md-qp .md-chip:hover{background:var(--gtile);color:var(--accent);outline:0}
+.side .fly-cols{flex:1 1 0;min-height:0;overflow-y:auto;overflow-x:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:22px;align-content:start;scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
+.side .md-fcol{display:flex;flex-direction:column;min-width:0}
+.side .md-fnone{grid-column:1/-1;padding:36px 12px;text-align:center;color:var(--muted)}
+.side .fly-g{margin-bottom:12px;display:flex;flex-direction:column;gap:1px}
+.side .fly-gh{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;color:var(--ink)}
+.side .fly-gh svg{flex-shrink:0}
+.side .fly-gh b{font:800 13.5px Cairo,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side .fly-g.cur .fly-gh{background:var(--gtile);color:var(--accent)}
+.side .fly-p,.side .fly-e{display:flex;align-items:center;gap:8px;border-radius:8px;font-size:12.5px;color:var(--deep2);text-decoration:none;white-space:nowrap;transition:background-color .12s ease,color .12s ease}
+.side .fly-p>span,.side .fly-e>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.side .fly-p{padding-block:3px;padding-inline:33px 8px;font-weight:700}
+.side .fly-e{padding-block:2px;padding-inline:46px 8px;color:var(--muted)}
+.side .fly-p:hover,.side .fly-e:hover,.side .fly-p.on,.side .fly-e.on,.side .fly-p.kb,.side .fly-e.kb{background:var(--gtile);color:var(--accent)}
+.side .fly-p.kb,.side .fly-e.kb{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.side .md-badge{margin-inline-start:auto;flex-shrink:0;min-width:20px;height:18px;padding:0 6px;box-sizing:border-box;border-radius:9px;background:#C2453A;color:#FFFFFF;font:800 10.5px/18px Cairo,sans-serif;font-style:normal;text-align:center}
+.side mark,.md-qp mark{background:transparent;color:var(--accent);font-weight:800}
+.side .md-ffoot{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);flex-shrink:0}
+.side .md-keys,.md-qp .md-keys{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-width:0}
+.side .md-cnt{margin-inline-start:auto;flex-shrink:0;padding-inline-end:3px;white-space:nowrap;font-weight:700}
+
+/* MAD-HSD-596 · loading splash: "Aurora · like sign in" (approved prototype proto/user-pane.html). The exact layers and motion of
+   the D1 sign-in: two page glows (glow-a 22s, glow-b 26s), the aurora band (aur-drift 24s) and the brand panel's silk (silk-a 9s,
+   silk-b 7s), all ease-in-out, infinite, alternate, in the palette colours (app.js sets --silk-bright, --silkL1, --silkL2).
+   The logo is drawn in the reading direction (English from the left, Arabic from the right), the tag rises, then a blur-out.
+   Loading screen transparency (--spt) fades the background group only; the logo stays fully visible. Reduce motion: a still gradient. */
+#loading.splash{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow:hidden;isolation:isolate;pointer-events:none;container-type:inline-size;
+  background:transparent}
+#loading.splash.on{display:flex}
+#loading .lys{position:absolute;inset:0;z-index:-1;overflow:hidden;isolation:isolate;opacity:calc(1 - var(--spt, 0))}
+#loading .lys>.base{position:absolute;inset:0;z-index:-2;background:var(--silk-bright,var(--md-silk-bright,linear-gradient(90deg,#AD8032 0%,#C06E45 52%,#92577F 100%)))}
+#loading .lys>.ly{position:absolute;z-index:-1;pointer-events:none;will-change:transform}
+#loading .ga{width:48.6%;height:62%;inset-inline-start:-14%;top:13%;border-radius:50%;background:var(--md-pa,#E0AE4A);opacity:.42;filter:blur(7.6cqw);animation:glow-a 22s ease-in-out infinite alternate}
+#loading .gb{width:50%;height:67%;inset-inline-end:-15%;top:-7%;border-radius:50%;background:var(--md-pb,#CC86AD);opacity:.45;filter:blur(7.6cqw);animation:glow-b 26s ease-in-out infinite alternate}
+#loading .au{inset-inline:-6%;top:0;height:51%;background:linear-gradient(90deg,var(--md-pa,#E0AE4A),var(--md-pc,#EC9364),var(--md-pb,#CC86AD));opacity:.35;mix-blend-mode:soft-light;-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.45) 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.45) 45%,transparent 100%);animation:aur-drift 24s ease-in-out infinite alternate}
+#loading .sa{inset:-45%;filter:blur(28px);animation:silk-a 9s ease-in-out infinite alternate;background:var(--silkL1,radial-gradient(38% 26% at 28% 62%,rgba(224,174,74,.75),transparent 70%))}
+#loading .sb{inset:-35%;filter:blur(22px);animation:silk-b 7s ease-in-out infinite alternate;background:var(--silkL2,radial-gradient(90% 16% at 50% 46%,rgba(255,255,255,.26),transparent 62%))}
+:root[data-theme="dark"] #loading .lys>.ly{opacity:.8}
+:root[data-theme="dark"] #loading .ga,:root[data-theme="dark"] #loading .gb{opacity:.3}
+html.ud-noanim #loading .lys>.ly{display:none}
+html.ud-see #loading .splash-tag{text-shadow:0 1px 10px rgba(0,0,0,.45)}
+html.ud-see #loading .splash-logo{filter:drop-shadow(0 6px 22px rgba(0,0,0,.35))}
+.splash-logo{height:clamp(84px,14vw,132px);width:auto;filter:drop-shadow(0 6px 20px rgba(0,0,0,.18));clip-path:inset(0 100% 0 0)}
+.splash-tag{color:#FFFFFFEB;font:700 15px Tajawal,sans-serif;letter-spacing:.16em;opacity:0}
+#loading.splash.full .splash-logo{animation:logo-ltr .96s cubic-bezier(.65,0,.35,1) .15s forwards}
+#loading.splash.full .splash-tag{animation:fade-up .5s ease .96s forwards}
+#loading.splash.quick .splash-logo{animation:logo-ltr .3s cubic-bezier(.65,0,.35,1) 0s forwards}
+#loading.splash.quick .splash-tag{display:none}
+#loading.splash.out{animation:splash-out .8s cubic-bezier(.65,0,.35,1) forwards}
+/* reading direction: English draws in from the left, Arabic from the right */
+[dir="rtl"] .splash-logo{clip-path:inset(0 0 0 100%)}
+[dir="rtl"] #loading.splash.full .splash-logo,[dir="rtl"] #loading.splash.quick .splash-logo{animation-name:logo-rtl}
+[dir="rtl"] .splash-tag{letter-spacing:0}
+@keyframes glow-a{0%{transform:translate(0,0) scale(1)}100%{transform:translate(23%,-21%) scale(1.15)}}
+@keyframes glow-b{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(-25%,15%) scale(.95)}}
+@keyframes aur-drift{0%{transform:translateX(calc(var(--dirx, 1) * -4%))}100%{transform:translateX(calc(var(--dirx, 1) * 4%))}}
+@keyframes silk-a{0%{transform:translate(-7%,5%) rotate(-4deg)}100%{transform:translate(7%,-5%) rotate(6deg)}}
+@keyframes silk-b{0%{transform:translate(-12%,10%) rotate(-16deg)}100%{transform:translate(12%,-8%) rotate(-6deg)}}
+@keyframes splash-out{0%{opacity:1}100%{opacity:0;transform:scale(1.05);filter:blur(12px);visibility:hidden}}
+@keyframes logo-ltr{0%{clip-path:inset(0 100% 0 0);opacity:.3;filter:blur(6px)}100%{clip-path:inset(0 0 0 0);opacity:1;filter:none}}
+@keyframes logo-rtl{0%{clip-path:inset(0 0 0 100%);opacity:.3;filter:blur(6px)}100%{clip-path:inset(0 0 0 0);opacity:1;filter:none}}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+html.ud-rm #loading,html.ud-rm #loading *{animation:none!important}
+html.ud-rm #loading .lys>.ly{display:none}
+html.ud-rm #loading .splash-logo{clip-path:none!important;opacity:1!important}
+html.ud-rm #loading .splash-tag{opacity:1!important}
+@media (prefers-reduced-motion:reduce){#loading,#loading *{animation:none!important}#loading .lys>.ly{display:none}.splash-logo{clip-path:none!important;opacity:1!important}.splash-tag{opacity:1!important}}
+
+.err{margin:40px auto;max-width:520px;padding:20px;border-radius:18px;background:var(--pop);border:1px solid var(--line)}
+
+/* the menu button on phones */
+#burger{height:44px;min-width:44px;padding:0 12px;border-radius:14px;border:1px solid var(--btn-b);background:var(--float);display:grid;place-items:center;cursor:pointer;color:var(--ink);backdrop-filter:blur(12px);font:700 14px Tajawal,sans-serif;box-shadow:0 14px 34px -18px var(--shadow)}
+#burger{position:fixed;bottom:14px;inset-inline-start:14px;z-index:70;display:none;padding:0}
+#burger{transition:opacity .2s ease,visibility 0s linear 0s}
+#burger.md-covered{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,visibility 0s linear .15s}   /* MAD-HSD-578 · a page pane lies under it (app.js) */
+#scrim{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.42);opacity:0;pointer-events:none;transition:opacity .3s}
+
+/* Arabic: arrows that show a direction point the other way (closed menu groups, chevrons, back and next) */
+[dir="rtl"] #stage svg:has(> path[d="M9 6l6 6-6 6"]),[dir="rtl"] #stage svg:has(> path[d="M15 6l-6 6 6 6"]),[dir="rtl"] #stage svg:has(> path[d="M15 18l-6-6 6-6"]),[dir="rtl"] #stage svg:has(> path[d="M9 18l6-6-6-6"]),
+[dir="rtl"] #stage svg:has(> path[d="M19 12H5M11 18l-6-6 6-6"]),[dir="rtl"] #stage svg:has(> path[d="M5 12h14M13 6l6 6-6 6"]),[dir="rtl"] #stage svg:has(> path[d="M5 12h14M12 5l7 7-7 7"]),[dir="rtl"] #stage svg:has(> path[d="M19 12H5M12 19l-7-7 7-7"]),
+[dir="rtl"] #stage svg:has(> path[d="M11 17l-5-5 5-5M18 17l-5-5 5-5"]),[dir="rtl"] #stage svg:has(> path[d="M13 17l5-5-5-5M6 17l5-5-5-5"]),[dir="rtl"] .collapse-ic{transform:scaleX(-1)}
+/* boards that draw their own right to left (D1) flip their own arrows */
+[dir="rtl"] #stage [dir="rtl"] svg:has(> path[d="M9 6l6 6-6 6"]),[dir="rtl"] #stage [dir="rtl"] svg:has(> path[d="M15 6l-6 6 6 6"]){transform:none}
+
+/* phones and small tablets (900px and less): the rail is hidden; the menu is a drawer with the same fly-out content, stacked */
+@media (max-width:900px){
+  .side-slot{width:0}
+  .side{padding:0;width:0}
+  .side .rail{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(420px,88vw);height:auto;border-radius:0;padding:12px;background:var(--float);backdrop-filter:blur(18px);transform:translateX(calc(var(--dirx,1) * -105%));transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:95}
+  .md-app.drawer .side .rail{transform:none;box-shadow:0 30px 70px -30px var(--shadow)}
+  .md-app.drawer~#scrim{opacity:1;pointer-events:auto}
+  .side .rail-logo,.side .rail-icons{display:none}
+  .side .rail-fly,.side .rail:hover .rail-fly,.side .rail:focus-within .rail-fly{position:static;width:auto;flex:1 1 0;min-height:0;opacity:1;visibility:visible;pointer-events:auto;translate:none;transition:none;box-shadow:none;border:0;background:transparent;backdrop-filter:none;padding:0}
+  .md-app:not(.full)~#burger{display:grid}
+  .md-app:has(#stage button[aria-label="Expand menu"])~#burger,.md-app:has(#stage button svg path[d="M4 5h16v14H4zM9 5v14M15 10l-2 2 2 2"])~#burger{display:none}   /* MAD-HSD-578 · also in Arabic (the label is translated) */
+  #stage aside.panel,#stage aside[style*="position: absolute"][style*="bottom:"]{max-width:calc(100vw - 24px)!important;inset-inline-end:12px!important}
+  /* sign in stacks: about Madar above the form; the other system screens keep their size and the page scrolls */
+  #stage .md-sign{flex-direction:column;overflow-y:auto;overflow-x:hidden}
+  #stage .md-sign>section{width:100%!important;flex:none!important;padding:72px 18px 24px!important}
+  #stage .md-sign>section+section{padding-top:8px!important}
+  #stage .md-sign h1{font-size:30px!important}
+  .md-app.full .stage-wrap{overflow:auto}
+}
+
+/* MAD-HSD-570 · engine pages (notes/engine.md), one rule set for all 25 engine boards */
+/* Arabic: no letter spacing (it breaks letter joining); the skeleton shimmer and the primary-button sweep run from the right */
+html[dir="rtl"] #stage *{letter-spacing:0!important}
+html[dir="rtl"] #stage .ah .skel{animation-direction:reverse}
+html[dir="rtl"] #stage .ah .pri{background-image:linear-gradient(270deg,var(--md-pdeep,#3A2C17) 0 50%,var(--md-pa,#E0AE4A) 50%,var(--md-pc,#EC9364) 75%,var(--md-pb,#CC86AD) 100%)!important;background-position:100% 0!important}
+html[dir="rtl"] #stage .ah .pri.red{background-image:linear-gradient(270deg,#B23434 0 50%,#D9534F 50%,var(--md-pc,#EC9364) 100%)!important}
+@media (hover:hover){html[dir="rtl"] #stage .ah .pri:not(:disabled):hover{background-position:0 0!important}}
+/* pane width icons (the pane opens on the left) and the header menu glyph */
+[dir="rtl"] #stage svg:has(> path[d="M15 6h5v12h-5z"]),[dir="rtl"] #stage svg:has(> path[d="M9.3 6H20v12H9.3z"]),[dir="rtl"] #stage svg:has(> path[d="M6 6h14v12H6z"]){transform:scaleX(-1)}
+[dir="rtl"] #stage svg:has(> path[d="M4 5h16v14H4zM9 5v14M15 10l-2 2 2 2"]){transform:none!important}
+/* dark: the primary button is gold with deep text (D1 dark pills); on hover the sweep shows the aurora with dark text */
+html.md-dark body #stage .ah .pri:not(.red){color:var(--md-pdeep,#3A2C17)!important;background-image:linear-gradient(90deg,var(--md-pa,#E0AE4A) 0 50%,var(--md-pc,#EC9364) 50%,var(--md-pb,#CC86AD) 75%,var(--md-pa,#E0AE4A) 100%)!important}
+html.md-dark[dir="rtl"] body #stage .ah .pri:not(.red){background-image:linear-gradient(270deg,var(--md-pa,#E0AE4A) 0 50%,var(--md-pc,#EC9364) 50%,var(--md-pb,#CC86AD) 75%,var(--md-pa,#E0AE4A) 100%)!important}
+@media (hover:hover){html.md-dark body #stage .ah .pri:not(:disabled):not(.red):hover{color:#141414!important}}
+html.md-dark body #stage .ah .pri.red{color:#FFFFFF!important}
+html.md-dark.ud-high body #stage .ah .pri:not(.red),html.md-dark.ud-aaa body #stage .ah .pri:not(.red){color:#0E0B06!important}   /* High contrast and AAA: near-black on the gold */
+html.md-dark #stage input,html.md-dark #stage select,html.md-dark #stage textarea{color-scheme:dark}
+/* restored D1 boards (notes/pg.md, sys.md): the aurora band grows and link underlines run from the right in Arabic */
+html[dir="rtl"] #stage .anim .aur{transform-origin:100% 0}
+html[dir="rtl"] #stage .lnk{background-position:100% 100%}
+
+/* MAD-HSD-570 · no sideways page scroll from 390 to 1920: on small windows the engine title row wraps, the layout tabs
+   scroll inside their own strip, counters go two by two; app.js stacks any other grid or row that does not fit.
+   Wide data tables keep their columns and scroll sideways inside their own box. */
+@media (max-width:1100px){
+  #stage .md-titlerow{flex-wrap:wrap}
+  #stage .md-titlerow>*{max-width:100%}
+  #stage .md-titlerow>:has([role="tab"]){overflow-x:auto;scrollbar-width:none}
+  #stage .md-kpi{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+#stage [data-md-fit="grid"]{grid-template-columns:minmax(0,1fr)!important}
+#stage [data-md-fit="grid2"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#stage [data-md-fit="wrap"]{flex-wrap:wrap!important}
+/* small windows: side panes take the width of the window (less a margin) instead of a third of it */
+@media (max-width:900px){
+  #stage .dw{width:auto!important;inset-inline:12px!important}
+  #stage aside.panel{width:auto!important;inset-inline:12px!important}
+}
+
+/* full-screen pages (sign in, system screens): the board is at least the window height and grows with its content; the page scrolls */
+.md-app.full #stage{height:auto;min-height:100%}
+.md-app.full #stage [data-dc-comp="sys/SignIn"]>div{height:auto!important;min-height:100vh;overflow:visible!important}
+.md-app.full #stage .ah{height:auto!important;min-height:100vh}
+.md-app.full #stage .md-sign{height:auto!important;min-height:100vh}
+.md-app.full #stage [data-dc-comp="sys/D1Login"]>.app{height:auto!important;min-height:100vh}
+
+/* MAD-HSD-632 · sign in fits every window from 360 to 1920 (EN and AR, light and dark): nothing sticks out or is cut.
+   Same parts, same look, same motion; only sizes and stacking follow the window.
+   New design (sys/Interactive .md-sign): 901-1180 the form column narrows and the headline scales instead of squeezing
+   the about column to a word per line; on phones the brand row and the headline keep a gap; feature chips wrap their
+   text inside the chip instead of spilling out of a fixed 36px height. */
+#stage .md-sign>section:first-child h1{overflow-wrap:break-word}
+#stage .md-sign>section:first-child>div:nth-of-type(2)>div:last-child span:has(>svg){height:auto!important;min-height:36px;padding-block:6px!important;max-width:100%;box-sizing:border-box}
+@media (max-width:1180px) and (min-width:901px){
+  #stage .md-sign>section:first-child{padding:48px 40px!important}
+  #stage .md-sign>section:last-child{width:clamp(420px,46vw,560px)!important;padding:28px!important}
+  #stage .md-sign h1{font-size:clamp(32px,3.6vw,46px)!important}
+}
+@media (max-width:900px){
+  #stage .md-sign>section:first-child>div:nth-of-type(2){margin-top:28px!important}
+  #stage .md-sign h1{font-size:clamp(26px,7.6vw,34px)!important}
+}
+@media (max-width:420px){
+  #stage .md-sign>section:last-child>div:nth-child(2){padding:24px 18px!important;border-radius:22px!important}
+}
+/* Old design (the approved D1 Login, sys/D1Login): the 980 x 700 card takes the window width; on 900px and less its two
+   panels stack (the form first, then the Madar panel) and the dark mode and language buttons sit under the design switch.
+   The glows, aurora, silk, rise and button motion are unchanged. */
+#stage [data-dc-comp="sys/D1Login"]>div{box-sizing:border-box;padding:96px 24px 72px}
+#stage [data-dc-comp="sys/D1Login"]>div>.card{width:min(980px,100%)!important;height:auto!important;min-height:min(700px,calc(100vh - 168px))}
+#stage [data-dc-comp="sys/D1Login"]>div>.card>div{min-width:0}
+@media (max-width:1100px){
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:first-child{padding:56px 36px 32px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:last-child{padding:36px 32px 40px!important}
+}
+@media (max-width:900px){
+  #stage [data-dc-comp="sys/D1Login"]>div{align-items:flex-start!important;padding:124px 14px 64px}
+  #stage [data-dc-comp="sys/D1Login"]>div>div:has(+ .card){top:66px!important;inset-inline:14px!important;gap:8px}
+  #stage [data-dc-comp="sys/D1Login"]>div>div:has(+ .card)>button{height:42px!important;padding:0 14px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card{flex-direction:column;min-height:0;border-radius:26px!important;padding:8px!important;gap:8px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div{flex:none!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:first-child{padding:32px 22px 26px!important;gap:16px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:last-child{padding:28px 22px 30px!important;gap:22px}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:first-child h1{font-size:28px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:last-child h2{font-size:26px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:last-child img{height:56px!important}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card>div:first-child>div:has(>a.lnk){flex-wrap:wrap;gap:8px}
+  #stage [data-dc-comp="sys/D1Login"]>div>.card+div{bottom:22px!important}
+}
+
+/* MAD-HSD-570 · Arabic: pager glyphs « ‹ › » mirror (previous and first point right), even in a box set left to right;
+   an empty field keeps the Arabic placeholder on the right, typed text takes its own direction (dir=auto from app/i18n.js) */
+html[dir="rtl"] #stage [data-md-glyph]{direction:rtl;unicode-bidi:isolate}
+html[dir="rtl"] #stage input[dir="auto"]:placeholder-shown,html[dir="rtl"] #stage textarea[dir="auto"]:placeholder-shown{direction:rtl}
+/* tab strips that scroll on small windows: no grey scrollbar, they still scroll */
+#stage :has(> [role="tab"]),#stage :has(> dc-g > [role="tab"]),#stage :has(> dc-g > dc-g > [role="tab"]){scrollbar-width:none}
+#stage :has(> [role="tab"])::-webkit-scrollbar,#stage :has(> dc-g > [role="tab"])::-webkit-scrollbar,#stage :has(> dc-g > dc-g > [role="tab"])::-webkit-scrollbar{display:none}
+/* 820px and less: panes are full width, so the pane-width buttons go */
+@media (max-width:820px){
+  #stage button:has(svg path[d="M15 6h5v12h-5z"]),#stage button:has(svg path[d="M9.3 6H20v12H9.3z"]),#stage button:has(svg path[d="M6 6h14v12H6z"]),
+  #stage button:has(svg path[d="M3 5h18v14H3zM15 5v14"]),#stage button:has(svg path[d="M3 5h18v14H3zM9 5v14"]),#stage button:has(svg path[d="M3 5h18v14H3zM5.5 5v14"]){display:none!important}
+  #stage [role="group"]:not(:has(button:not([style*="display: none"]):not(:has(svg path[d^="M15 6h5"])):not(:has(svg path[d^="M9.3 6H"])):not(:has(svg path[d^="M6 6h14"])):not(:has(svg path[d^="M3 5h18v14H3z"])))):has(svg path[d^="M15 6h5"], svg path[d^="M3 5h18v14H3z"]){display:none!important}
+}
+
+/* dark: print paper and page previews stay white, so their text stays dark (it would inherit the light text of the dark page) */
+html.md-dark #stage :is(.rs-paper,.mdk-paper,[aria-label="Page preview"],[aria-label="معاينة الصفحة"]){color:#2C2111;--md-muted:#666056}
+/* phones: a restored board's header puts its buttons under the title instead of squeezing the title into three lines */
+@media (max-width:480px){#stage header:has(> div > h1, > div > div[style*="font-size: 18px"]){flex-wrap:wrap}}
+
+/* MAD-HSD-575 · fly-out, user menu and quick search on phones and small tablets (the drawer) */
+@media (max-width:900px){
+  .side .fly-cols{grid-template-columns:minmax(0,1fr)}
+  .side .md-ffoot .md-keys,.side .md-fs kbd{display:none}
+  .side .md-ffoot{justify-content:flex-end}
+  .side .me-wrap{order:3;align-self:flex-start;margin-top:8px}
+  .side .md-um{inset-inline:8px;bottom:58px;width:auto;max-height:calc(100% - 72px)}
+  @keyframes md-um-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+
+/* MAD-HSD-575 · quick search: the header pill (beside the board's language button) and the centred dialog over a blurred page */
+#stage :has(> md-qs) > [data-md="lang"],#stage :has(> md-qs) > [data-md="lang"] ~ :not(md-qs){order:2}
+md-qs.md-qs{order:1;display:flex;align-items:center;gap:10px;flex:0 1 380px;min-width:0;height:40px;padding-inline:14px 7px;box-sizing:border-box;border-radius:12px;border:1px solid var(--btn-b);background:var(--btn);color:var(--muted);cursor:pointer;font:500 13.5px Tajawal,sans-serif;text-align:start;backdrop-filter:blur(8px);transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease}
+md-qs.md-qs svg{color:var(--accent);flex-shrink:0}
+md-qs.md-qs .md-qs-t{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (hover:hover){md-qs.md-qs:hover{background:var(--float);border-color:var(--field-b)}}
+md-qs.md-qs:focus-visible{outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 28%,transparent)}
+@media (max-width:1100px){md-qs.md-qs{flex-basis:250px}}
+@media (max-width:900px){md-qs.md-qs{flex:0 0 40px;width:40px;padding:0;justify-content:center}md-qs.md-qs .md-qs-t,md-qs.md-qs kbd{display:none}}
+.md-qp{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-start;justify-content:center;padding:12vh 16px 16px;box-sizing:border-box}
+.md-qp[hidden]{display:none}
+.md-qp-back{position:absolute;inset:0;background:#1A140A47;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .2s ease}
+:root[data-theme="dark"] .md-qp-back{background:#00000080}
+.md-qp-box{position:relative;width:min(680px,100%);max-height:min(640px,76vh);display:flex;flex-direction:column;border-radius:24px;background:var(--pop);border:1px solid var(--btn-b);box-shadow:0 40px 90px -30px var(--shadow);overflow:hidden;color:var(--ink);font:14px/1.45 Tajawal,sans-serif;text-align:start;
+  opacity:0;transform:translateY(-10px) scale(.98);transition:opacity .2s ease,transform .26s cubic-bezier(.16,1,.3,1)}
+.md-qp.on .md-qp-back{opacity:1}
+.md-qp.on .md-qp-box{opacity:1;transform:none}
+.md-qp-in{display:flex;align-items:center;gap:12px;height:62px;flex-shrink:0;padding:0 18px;border-bottom:1px solid var(--line);color:var(--accent);cursor:text}
+.md-qp-in input{font-size:16.5px}
+#qp-esc{cursor:pointer}
+.md-qp-list{flex:1 1 auto;min-height:0;overflow-y:auto;padding:6px 10px 10px;scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
+.md-qh{padding:12px 10px 4px;font:700 11.5px Tajawal,sans-serif;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+[dir="rtl"] .md-qh,[dir="rtl"] .side .md-um-lbl{letter-spacing:0}
+.md-qr{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:14px;cursor:pointer;transition:background-color .1s ease}
+.md-qr.on{background:var(--gtile)}
+.md-qi{width:36px;height:36px;border-radius:11px;background:var(--soft);display:grid;place-items:center;color:var(--deep);flex-shrink:0}
+.md-qr.on .md-qi{background:var(--pop);color:var(--accent)}
+.md-qt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.md-qt b{font:800 14px Cairo,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md-qt small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md-qo{font:700 12px Tajawal,sans-serif;color:var(--accent);white-space:nowrap;visibility:hidden}
+.md-qr.on .md-qo{visibility:visible}
+.md-qnone{padding:14px 10px 4px;color:var(--muted);font-size:13px}
+.md-qss{display:flex;flex-wrap:wrap;gap:6px;padding:12px 10px 2px}
+.md-qtip{margin:10px 10px 4px;padding:10px 12px;border-radius:12px;background:var(--soft);font-size:12.5px;color:var(--muted)}
+.md-qp-foot{display:flex;align-items:center;gap:12px;flex-shrink:0;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.md-qco{margin-inline-start:auto;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+@media (max-width:900px){
+  .md-qp{padding:0}
+  .md-qp-box{width:100%;height:100%;max-height:none;border-radius:0;border:0}
+  .md-qp-foot .md-keys{display:none}
+}
+@media (prefers-reduced-motion:reduce){.md-qp-box,.md-qp-back,.side .md-um.open{transition:none;animation:none}}
+
+/* engine report and insight cards keep their designed height and scroll inside (they are marked md-card + data-md-keep by the build);
+   on small windows a card takes its content height with the list capped at 60% of the window */
+@media (max-width:900px){
+  #stage .md-card{height:auto!important;min-height:220px}
+  #stage .md-card>div{flex:1 1 auto!important}
+  #stage .md-card .scroll,#stage .md-card [style*="overflow-y: auto"]{flex:0 1 auto!important;max-height:60vh}
+  #stage :has(> dc-g > .md-card),#stage :has(> .md-card){grid-auto-rows:auto!important}
+}
+
+/* engine avatars in dark: the person's colour on a dark tint of it (the light pastel would glare under light text) */
+html.md-dark #stage .ah .md-av{background:color-mix(in srgb,var(--av) 28%,hsl(36 40% 9%))!important;color:var(--av)!important}
+
+/* MAD-HSD-579 · notifications (System v2.1 e/Home-Notifications): one panel for the bell of every board, under the bell
+   (a sheet on phones), and the unread badge on the bell. Colours follow the shell tokens (light, dark) and the palette. */
+:root{--nt-un:#FBF6EA;--nt-tabs:#F3EFE8;--nt-tab-on:#FFFFFF;--nt-sub:#4F493F;--nt-sec:#FFFFFF;--nt-sec-b:#DFDDDA;--nt-badge-b:#FFFFFF}
+:root[data-theme="dark"]{--nt-un:#E0AE4A14;--nt-tabs:#FFFFFF0F;--nt-tab-on:#2A2216;--nt-sub:#C0BBB5;--nt-sec:#FFFFFF0D;--nt-sec-b:#3F3A31;--nt-badge-b:#1A140A}
+#stage button[data-md-bell]:not([style*="position"]){position:relative}
+#stage button[data-md-bell][aria-expanded="true"]{background:var(--nt-tab-on)!important;border-color:var(--accent)!important}
+md-nb{position:absolute;top:-5px;inset-inline-end:-5px;min-width:19px;height:19px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:#C2453A;color:#FFFFFF;font:800 11px/15px Cairo,sans-serif;text-align:center;border:2px solid var(--nt-badge-b);pointer-events:none;animation:md-nb-in .3s cubic-bezier(.34,1.56,.64,1)}
+md-nb[hidden]{display:none}
+@keyframes md-nb-in{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+/* MAD-HSD-588 · a side pane like the engine and D1 panes (no modals): from the page's end side, full height, 580px with the
+   one-third / two-thirds presets, the board dimmed and blurred behind it, the panes' slide-in. The rail stays above it. */
+.md-nt{position:fixed;inset:0;z-index:84}
+.md-nt[hidden]{display:none}
+.md-nt-back{position:absolute;inset:0;background:#231A0E47;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .25s ease}
+:root[data-theme="dark"] .md-nt-back{background:#00000073}
+.md-nt.on .md-nt-back{opacity:1}
+/* MAD-HSD-591 · the engine side pane 1:1 (computed from em's aside.panel): frosted outer frame, the inner glass card with the
+   list, header with icon tile / title / width presets (⅓, ⅔, ⅞) / ×, tabs under the title, actions in the footer */
+.md-nt{--ntf1:#FFFFFFB8;--ntf2:#FFFFFF8C;--ntf-b:#FFFFFFE6;--ntc:#FFFFFFF7;--ntc-b:#FFFFFF;--ntc-sh:#3A2C17;--nt-glass:#FFFFFF8C;--nt-tile:#FFFFFFB3;--nt-x:#FFFFFFE6;--nt-ic:#8A847A;--nt-on:#FFFFFF}
+:root[data-theme="dark"] .md-nt{--ntf1:#FFFFFF21;--ntf2:#FFFFFF19;--ntf-b:#1A140AE6;--ntc:#1A140AF7;--ntc-b:#1A140A;--ntc-sh:#000000AA;--nt-glass:#FFFFFF19;--nt-tile:#FFFFFF14;--nt-x:#1A140AE6;--nt-ic:#C0BBB5;--nt-on:#2A2216}
+.md-nt-box{position:fixed;top:16px;bottom:16px;inset-inline-end:16px;width:min(580px,calc(100vw - 32px));display:flex;flex-direction:column;box-sizing:border-box;border-radius:26px;
+  background:linear-gradient(180deg,var(--ntf1),var(--ntf2));border:1px solid var(--ntf-b);box-shadow:0 30px 70px -30px var(--shadow);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);color:var(--ink);font:14px/1.45 Tajawal,sans-serif;text-align:start;overflow:hidden;
+  transition:width .35s cubic-bezier(.16,1,.3,1)}
+.md-nt.on .md-nt-box{animation:md-nt-in .35s cubic-bezier(.16,1,.3,1)}
+@keyframes md-nt-in{from{opacity:0;transform:translateX(calc(var(--dirx,1) * 24px))}to{opacity:1;transform:none}}
+.md-nt[data-w="third"] .md-nt-box{width:calc((100vw - 32px) / 3)}
+.md-nt[data-w="two"] .md-nt-box{width:calc((100vw - 32px) * 2 / 3)}
+.md-nt[data-w="seven"] .md-nt-box{width:calc((100vw - 32px) * 7 / 8)}
+.md-nt-box button{font:inherit;color:inherit;cursor:pointer}
+.md-nt-box button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.md-nt-head{padding:16px 18px 12px;display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.md-nt-hrow{display:flex;gap:10px;align-items:flex-start}
+.md-nt-hic{width:44px;height:44px;border-radius:14px;background:var(--nt-tile);border:1px solid var(--ntf-b);display:grid;place-items:center;color:var(--accent);flex-shrink:0}
+.md-nt-ht{flex-grow:1;min-width:0;line-height:1.25}
+.md-nt-ht h2{margin:0;font:800 20px Cairo,sans-serif;color:var(--ink)}
+.md-nt-ht div{font-size:12.5px;color:var(--muted)}
+.md-nt-w{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--nt-glass);border:1px solid var(--ntf-b);flex-shrink:0;align-self:center}
+.md-nt-w button{width:34px;height:34px;border-radius:9px;border:0;background:transparent;box-shadow:none;display:grid;place-items:center;padding:0;color:var(--nt-ic)!important}
+.md-nt-w button[aria-pressed="true"]{background:var(--nt-on);box-shadow:0 4px 10px -8px var(--ntc-sh)}
+[dir="rtl"] .md-nt-w svg{transform:scaleX(-1)}
+.md-nt-x{width:44px;height:44px;border-radius:14px;border:1px solid var(--ntf-b);background:var(--nt-x);font-size:18px!important;line-height:1;padding:0;flex-shrink:0;color:var(--ink)!important}
+.md-nt-card{flex:1 1 auto;min-height:0;margin:0 10px;display:flex;flex-direction:column;border-radius:18px;background:var(--ntc);border:1px solid var(--ntc-b);box-shadow:0 10px 30px -24px var(--ntc-sh);overflow:hidden}
+.md-nt-all{height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--nt-sec-b);background:var(--nt-sec);font:700 13.5px Tajawal,sans-serif!important;color:var(--ink)!important;white-space:nowrap;flex-shrink:0}
+.md-nt-all:disabled{opacity:.45;cursor:not-allowed!important}
+.md-nt-tabs{display:flex;gap:4px;background:var(--nt-tabs);border-radius:12px;padding:4px}
+.md-nt-tabs button{flex:1;height:34px;border:0;border-radius:9px;background:transparent;font:800 13px Cairo,sans-serif!important;color:var(--muted)!important;white-space:nowrap;padding:0 8px;transition:background-color .18s ease,color .18s ease}
+.md-nt-tabs button.on{background:var(--nt-tab-on);color:var(--ink)!important;box-shadow:0 1px 3px #0000001A}
+.md-nt-list{display:flex;flex-direction:column;gap:4px;overflow:auto;min-height:0;flex:1 1 auto;padding:14px 20px;scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
+.md-nt-day{font:700 11.5px Tajawal,sans-serif;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding:6px 4px 2px}
+[dir="rtl"] .md-nt-day{letter-spacing:0}
+.md-nt-it{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:14px;border:0;background:transparent;text-align:start;width:100%;transition:background-color .14s ease}
+.md-nt-it.un{background:var(--nt-un)}
+@media (hover:hover){.md-nt-it:hover{background:var(--soft)}}
+.md-nt-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.md-nt-ic.t-bad{background:#FBEAE8;color:#C2453A}.md-nt-ic.t-info{background:#E6EEF8;color:#2F5E8F}.md-nt-ic.t-gold{background:#F6E7C6;color:#8A6424}.md-nt-ic.t-ok{background:#EAF5EE;color:#1A7A4C}.md-nt-ic.t-neu{background:#F3EFE8;color:#3A2C17}
+:root[data-theme="dark"] .md-nt-ic.t-bad{background:#F07A7A2E;color:#F07A7A}:root[data-theme="dark"] .md-nt-ic.t-info{background:#7FB0E82E;color:#8FBCEB}:root[data-theme="dark"] .md-nt-ic.t-gold{background:#E0AE4A2E;color:#E0AE4A}:root[data-theme="dark"] .md-nt-ic.t-ok{background:#5CC08A2E;color:#6BCB97}:root[data-theme="dark"] .md-nt-ic.t-neu{background:#FFFFFF14;color:#EDEFEE}
+.md-nt-tx{flex-grow:1;min-width:0;display:block}
+.md-nt-tx b{display:block;font:500 14px/1.35 Tajawal,sans-serif;color:var(--ink)}
+.md-nt-it.un .md-nt-tx b{font-weight:800}
+.md-nt-tx span{display:block;font-size:12.5px;color:var(--nt-sub);line-height:1.4}
+.md-nt-tx small{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.md-nt-dot{width:9px;height:9px;border-radius:50%;background:var(--md-pc,#EC9364);margin-top:6px;flex-shrink:0}
+.md-nt-none{padding:26px;text-align:center;color:var(--muted)}
+.md-nt-foot{display:flex;gap:8px;padding:12px 18px 14px;flex-shrink:0}
+.md-nt-open{flex-grow:1;height:40px;border-radius:12px;border:0;font:800 14px Cairo,sans-serif!important;color:var(--on-ink)!important;
+  background-image:linear-gradient(90deg,var(--on) 0 50%,var(--md-pa,#E0AE4A) 50%,var(--md-pc,#EC9364) 75%,var(--md-pb,#CC86AD) 100%);background-size:202% 100%;background-position:0 0;transition:background-position .55s cubic-bezier(.16,1,.3,1),color .3s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+[dir="rtl"] .md-nt-open{background-image:linear-gradient(270deg,var(--on) 0 50%,var(--md-pa,#E0AE4A) 50%,var(--md-pc,#EC9364) 75%,var(--md-pb,#CC86AD) 100%);background-position:100% 0}
+@media (hover:hover){.md-nt-open:hover{background-position:100% 0;color:#2C2111!important}[dir="rtl"] .md-nt-open:hover{background-position:0 0}}
+.md-nt-open:active{transform:scale(.98)}
+.md-nt-set{width:40px;height:40px;border-radius:12px;border:1px solid var(--nt-sec-b);background:var(--nt-sec);display:grid;place-items:center;color:var(--ink)!important;flex-shrink:0}
+@media (max-width:900px){.md-nt-box,.md-nt[data-w] .md-nt-box{inset-inline:12px;width:auto}.md-nt-w{display:none}}
+@media (max-width:600px){.md-nt-box,.md-nt[data-w] .md-nt-box{top:12px;bottom:12px}.md-nt-card{margin:0 8px}.md-nt-list{padding:12px 14px}.md-nt-foot{flex-wrap:wrap}.md-nt-open{flex-basis:100%}.md-nt-all{flex:1 1 auto}}
+}
+@media (prefers-reduced-motion:reduce){.md-nt-box,.md-nt-back,md-nb,.md-nt.on .md-nt-box{transition:none;animation:none}}
+
+/* MAD-HSD-588 · phones: the page header keeps its whole title and breadcrumb. The title block takes the first row beside the menu
+   button and wraps (no "…"); the search, language, theme and bell buttons go to a second row at the end. */
+@media (max-width:600px){
+  #stage header:has(> md-qs){flex-wrap:wrap!important;row-gap:8px!important}
+  #stage header:has(> md-qs) > div{flex:1 1 calc(100% - 64px)!important;min-width:0!important}
+  #stage header:has(> md-qs) > div > div{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere}
+  #stage header:has(> md-qs) > md-qs.md-qs{margin-inline-start:auto}
+}
+/* MAD-HSD-589 · the header's square buttons (language, theme, bell, search) keep their size on phones */
+#stage :is([data-md="theme"],[data-md="bell"],[data-md="menu"],[data-md="lang"]){flex-shrink:0!important}
+#stage [data-md="theme"]:not(:has(span)),#stage [data-md="bell"]{min-width:40px;aspect-ratio:auto}
+/* MAD-HSD-590 · Compact / Detailed menu switch at the end of the fly-out search row (also in the drawer) */
+.side .md-fmode{display:inline-flex;gap:2px;padding:3px;border-radius:14px;background:var(--tile);border:1px solid var(--btn-b);flex-shrink:0;height:44px;box-sizing:border-box}
+.side .md-fmode button{width:36px;height:36px;border-radius:10px;border:0;padding:0;background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:background-color .18s ease,color .18s ease}
+.side .md-fmode button.on{background:var(--on);color:var(--on-ink);box-shadow:0 6px 16px -10px var(--shadow)}
+.side .md-fmode button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (hover:hover){.side .md-fmode button:not(.on):hover{background:var(--gtile);color:var(--accent)}}
+
+/* MAD-HSD-570 · user decision (tabs option 2): engine layout tabs sit on their own row under the title, at the start side;
+   title and subtitle at the start of the top row, the action buttons at its end ("+ New" last). The tabs never move. */
+#stage .md-titlerow:has([role="tab"]){flex-wrap:wrap;row-gap:10px}
+#stage .md-titlerow:has([role="tab"])>*,#stage .md-titlerow:has([role="tab"])>dc-g>*{order:1}
+#stage .md-titlerow:has([role="tab"])>:first-child:not(.md-lists),#stage .md-titlerow:has([role="tab"])>.md-lists+*{order:0;flex:1 1 0}
+#stage .md-titlerow:has([role="tab"])::after{content:"";order:2;flex-basis:100%;height:0}
+#stage .md-titlerow>:has([role="tab"]){order:3!important;max-width:100%;overflow-x:auto;scrollbar-width:none}
+#stage .md-titlerow>:has([role="tab"])::-webkit-scrollbar{display:none}
+/* 480px and less: the secondary buttons fold into ⋯ (app.js adds it), "+ New" becomes a + icon button */
+#stage .md-more-btn{display:none}
+@media (max-width:480px){
+  /* the title keeps one width on every layout (room for ⋯ and +), so its lines and the tabs under it never move */
+  #stage .md-titlerow:has([role="tab"])>:first-child:not(.md-lists),#stage .md-titlerow:has([role="tab"])>.md-lists+*{flex:0 0 calc(100% - 102px)!important;max-width:calc(100% - 102px)}
+  #stage .md-titlerow:has([role="tab"])>:first-child:not(.md-lists)>div:not(:first-child),#stage .md-titlerow:has([role="tab"])>.md-lists+*>div:not(:first-child){min-height:2lh}
+  #stage .md-titlerow:has(.md-more-btn) button:not(.pri):not([role="tab"]):not(.md-more-btn):not(.md-lists button){display:none!important}
+  #stage .md-titlerow .md-more-btn{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid var(--btn-b,#FFFFFFF2);background:var(--btn,#FFFFFF9E);font:800 18px Cairo,sans-serif;color:var(--ink,#2C2111);cursor:pointer;flex-shrink:0}
+  #stage .md-titlerow button.pri{width:40px;padding:0!important;font-size:0!important;justify-content:center;display:grid!important;place-items:center}
+  #stage .md-titlerow button.pri::before{content:"+";font:800 20px/1 Cairo,sans-serif}
+  
+}
+#stage .md-more-pop{position:absolute;z-index:40;min-width:200px;border-radius:14px;background:#FFFFFFF7;border:1px solid #FFFFFFE6;box-shadow:0 24px 50px -24px #3A2C17CC;padding:6px;display:flex;flex-direction:column;gap:2px;animation:pop-in .2s cubic-bezier(.16,1,.3,1)}
+#stage .md-more-pop button{display:block;width:100%;text-align:start;height:38px;padding:0 12px;border-radius:10px;border:0;background:transparent;font:700 13.5px Tajawal,sans-serif;color:#2C2111;cursor:pointer}
+#stage .md-more-pop button:hover{background:#F6F3ED}
+
+/* MAD-HSD-593 · pane settings (approved prototype proto/pane-settings.html). Every side pane of the page ([data-md-pane], found by
+   app.js: a fixed box holding the width pill), its inner card ([data-md-pcard]) and the dimmed layer behind it ([data-md-scrim])
+   follow the classes on <html>. Defaults change nothing. */
+md-pgd{width:1px;height:20px;background:currentColor;opacity:.22;margin:0 3px;align-self:center;flex-shrink:0}
+md-pg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;cursor:pointer;color:#8A847A;flex-shrink:0}
+:root[data-theme="dark"] md-pg{color:#C0BBB5}
+md-pg[aria-expanded="true"]{background:#FFFFFF;box-shadow:0 4px 10px -8px #3A2C17;color:var(--ink)}
+:root[data-theme="dark"] md-pg[aria-expanded="true"]{background:#2A2216}
+md-pg:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (hover:hover){md-pg:hover{color:var(--ink)}}
+/* 820px and less: the width presets go, the pill keeps only the gear */
+@media (max-width:820px){
+  #stage [role="group"]:has(md-pg){display:inline-flex!important}
+  md-pgd{display:none}
+  .md-nt-w{display:inline-flex!important}
+  .md-nt-w button{display:none!important}
+}
+/* look: glass transparency and colour (only when changed) */
+html.mp-glass [data-md-pane]{background:var(--mp-f)!important;border-color:var(--mp-fb)!important}
+html.mp-glass [data-md-pcard]{background:var(--mp-card)!important}
+/* page behind: no blur; scroll (no dim, the page stays clickable); dock (the page narrows) */
+html.mp-noblur [data-md-scrim]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.mp-scroll [data-md-scrim],html.mp-docked [data-md-scrim]{opacity:0!important;pointer-events:none!important;backdrop-filter:none!important}
+html.mp-scroll .md-nt,html.mp-docked .md-nt{pointer-events:none}
+html.mp-scroll .md-nt-box,html.mp-docked .md-nt-box{pointer-events:auto}
+html.mp-docked .stage-wrap{padding-inline-end:var(--mp-dockw);transition:padding .35s cubic-bezier(.16,1,.3,1)}
+html.mp-docked [data-md-pane]{box-shadow:0 20px 50px -34px var(--shadow)!important}
+/* motion and density */
+html.mp-still [data-md-pane],html.mp-still .md-nt.on .md-nt-box,html.mp-still .md-pp{animation:none!important;transition:none!important}
+html.mp-compact [data-md-pane] [style*="padding: 16px 18px 12px"],html.mp-compact .md-nt-head{padding:12px 14px 6px!important;gap:4px!important}
+html.mp-compact [data-md-pane] [style*="padding: 12px 18px 14px"],html.mp-compact .md-nt-foot{padding:8px 14px 10px!important}
+html.mp-compact [data-md-pane] .scroll,html.mp-compact .md-nt-list{padding:10px 14px!important}
+html.mp-compact [data-md-pane] [style*="gap: 10px"]{gap:6px!important}
+html.mp-compact [data-md-pane] [style*="gap: 12px"]{gap:8px!important}
+html.mp-compact [data-md-pane] [style*="gap: 14px"]{gap:8px!important}
+html.mp-compact .md-nt-it{padding:7px 8px}
+/* position: start (after the rail) and floating (a card with margins, centred; dragged by its header, see app.js) */
+@media (min-width:821px){
+  html.mp-pos-start [data-md-pane]{inset-inline-end:auto!important;inset-inline-start:var(--mp-start,100px)!important;animation-name:md-pane-in-start!important}
+  html.mp-pos-float [data-md-pane]{top:48px!important;bottom:48px!important;inset-inline-end:48px!important;box-shadow:0 40px 90px -30px var(--shadow)!important;border-radius:26px!important}
+  html.mp-pos-float.mp-fpos [data-md-pane]{inset-inline-start:var(--mp-fx)!important;inset-inline-end:auto!important;top:var(--mp-fy)!important;bottom:auto!important;height:calc(100vh - 96px)!important;height:calc(100dvh - 96px)!important}
+  html.mp-grab [data-md-pane]{cursor:move}
+  html.mp-dragging,html.mp-dragging *{cursor:grabbing!important;user-select:none!important}
+  html.mp-dragging [data-md-pane]{transition:none!important}
+}
+@media (min-width:821px) and (max-width:900px){html{--mp-start:12px}}
+@keyframes md-pane-in-start{from{opacity:0;transform:translateX(calc(var(--dirx,1) * -24px))}to{opacity:1;transform:none}}
+/* the popover */
+.md-pp{position:fixed;z-index:125;width:384px;overflow:auto;scrollbar-width:thin;border-radius:22px;background:var(--pop);border:1px solid var(--btn-b);box-shadow:0 30px 70px -30px var(--shadow),0 0 0 1px #0000000A;padding:12px;display:flex;flex-direction:column;gap:2px;color:var(--ink);font:14px/1.45 Tajawal,sans-serif;text-align:start;box-sizing:border-box}
+:root:not([data-theme="dark"]) .md-pp{background:#FFFFFF}
+.md-pp[hidden]{display:none}
+.md-pp.anim{animation:md-pp-in .18s ease}
+@keyframes md-pp-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.md-pp button{font:inherit;color:inherit;cursor:pointer}
+.md-pp h4{margin:0;font:800 16px Cairo,sans-serif;display:flex;align-items:center;gap:8px}
+.md-pp .mp-sub{font-size:12px;color:var(--muted);margin:0 0 6px}
+.md-pp .mp-sec{font:800 11.5px Cairo,sans-serif;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;padding:10px 4px 2px}
+[dir="rtl"] .md-pp .mp-sec{letter-spacing:0}
+.md-pp .mp-row{display:flex;align-items:center;gap:10px;padding:6px;border-radius:12px}
+@media (hover:hover){.md-pp .mp-row:hover{background:var(--soft)}}
+.md-pp .mp-lb{flex:1;min-width:0}
+.md-pp .mp-lb b{display:block;font-weight:700;font-size:13.5px}
+.md-pp .mp-lb small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
+.md-pp .mp-row.dis{opacity:.45}
+.md-pp .mp-sw{width:40px;height:24px;border-radius:99px;border:0;background:#D9D5CF;position:relative;flex-shrink:0;padding:0;transition:background-color .18s}
+:root[data-theme="dark"] .md-pp .mp-sw{background:#4A443A}
+.md-pp .mp-sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:18px;height:18px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px #0004;transition:inset-inline-start .18s}
+.md-pp .mp-sw[aria-checked="true"],:root[data-theme="dark"] .md-pp .mp-sw[aria-checked="true"]{background:var(--on)}
+.md-pp .mp-sw[aria-checked="true"]::after{inset-inline-start:19px}
+:root[data-theme="dark"] .md-pp .mp-sw[aria-checked="true"]::after{background:#1A140A}
+.md-pp .mp-sw:disabled{cursor:not-allowed}
+.md-pp .mp-sw:focus-visible,.md-pp .mp-ms button:focus-visible,.md-pp input:focus-visible,.md-pp .mp-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.md-pp .mp-sl{padding:4px 6px 8px}
+.md-pp .mp-top{display:flex;align-items:baseline;gap:8px}
+.md-pp .mp-top b{flex:1;font-weight:700;font-size:13.5px}
+.md-pp .mp-top output{font:800 13px Cairo,sans-serif;min-width:40px;text-align:end}
+.md-pp input[type="range"]{width:100%;accent-color:var(--on);margin:6px 0 0}
+.md-pp .mp-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.md-pp .mp-ends button{border:0;background:none;padding:0;font:700 11px Tajawal,sans-serif;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.md-pp .mp-posrow{flex-wrap:wrap}
+.md-pp .mp-ms{display:inline-flex;padding:3px;border-radius:10px;background:var(--nt-tabs,#F3EFE8);gap:2px;flex-shrink:0}
+.md-pp .mp-ms button{height:28px;padding:0 9px;border:0;border-radius:8px;background:transparent;font:700 12px Tajawal,sans-serif;color:var(--muted)}
+.md-pp .mp-ms button.on{background:var(--nt-tab-on,#FFFFFF);color:var(--ink);box-shadow:0 1px 2px #0002}
+.md-pp .mp-kbd{font-size:11.5px;color:var(--muted);padding:4px 6px 0}
+.md-pp kbd{font:700 11px Tajawal,sans-serif;border:1px solid var(--field-b);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--tile);direction:ltr;unicode-bidi:isolate}
+.md-pp .mp-ft{position:sticky;bottom:-12px;margin:6px -12px -12px;background:inherit;display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:10px 16px 12px}
+.md-pp .mp-ft small{flex:1;font-size:11.5px;color:var(--muted)}
+.md-pp .mp-b{height:34px;padding:0 12px;border-radius:12px;border:1px solid var(--nt-sec-b,#DFDDDA);background:var(--nt-sec,#FFFFFF);font:700 12.5px Tajawal,sans-serif;white-space:nowrap}
+
+/* the list control (option 5) closes the layout-tabs row, at its end */
+#stage .md-titlerow>.md-lists{order:4!important;margin-inline-start:auto;flex:0 1 auto!important}
+
+/* subtitles wrap to two lines (a cut in the middle of a number run garbles it in Arabic); counter labels wrap instead of ellipsis */
+#stage .md-titlerow>:first-child>div:not(:first-child),#stage .md-titlerow>.md-lists+*>div:not(:first-child){white-space:normal!important;overflow:hidden;text-overflow:clip!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+#stage .md-kpi div,#stage .md-kpi span,#stage .md-kpi b{white-space:normal!important;text-overflow:clip!important}
+/* Arabic: a flex box marked dir="auto" (a cell holding an icon and a file name) keeps the page direction, so it sits under its header;
+   the Latin text inside is isolated inline by app/i18n.js */
+html[dir="rtl"] #stage [dir="auto"]:is([style*="display: flex"],[style*="display: inline-flex"],[style*="display: grid"]){direction:rtl}
+/* MAD-HSD-595 · the signed-in system screens in the site shell: the board takes the window width like every page (no 1100px floor) */
+.md-app:not(.full) #stage [data-dc-comp="sys/Interactive"]>.ah{min-width:0!important;min-height:100%!important;height:auto!important}
+/* phones: one row; the layout tabs scroll in the space left and the list chip keeps the end */
+@media (max-width:820px){
+  #stage .md-titlerow>:has([role="tab"]):not(.md-lists){flex:1 1 0!important;min-width:0}
+  #stage .md-titlerow>.md-lists{flex:0 0 auto!important;margin-inline-start:8px}
+  #stage .md-titlerow .md-l-sz{max-width:96px}
+  /* a layout with sort pills in the row: the pills take their own line under the tabs, so the tabs and the list chip never move */
+  #stage .md-titlerow>.md-lists:has([data-md-sort]),#stage .md-titlerow>.md-lists>dc-g:has([data-md-sort]){display:contents!important}
+  #stage .md-titlerow>.md-lists:has([data-md-sort]) .md-l-chip{order:4;flex:0 0 auto;margin-inline-start:8px}
+  #stage .md-titlerow>.md-lists [data-md-sort]{order:5;flex:1 1 100%;max-width:100%}
+}
+#stage [data-md-sort],#stage [role="group"][aria-label="Sort"]{max-width:100%;overflow-x:auto;scrollbar-width:none}
+/* MAD-HSD-604 · inline form validation: a red message with an icon under the field (engine forms), the footer line jumps to the first one */
+#stage .md-vmsg[data-err="true"]{display:flex;align-items:flex-start;gap:5px;font-weight:700!important;line-height:1.45}
+#stage .md-vmsg .md-verr-ic{flex-shrink:0;margin-top:2px}
+#stage .md-vsum{max-width:100%;flex-shrink:1}
+#stage .md-vsum .md-verr-ic{flex-shrink:0}
+
+/* MAD-HSD-596 · the user pane: the standard double-glass side pane (frame + inner card, as the engine panes), on the start side next
+   to the rail (mirrored in Arabic), a full-width sheet on phones. The rail stays above the dimmed page. */
+.md-up{position:fixed;inset:0;z-index:84}
+.md-up[hidden]{display:none}
+.md-up-back{position:absolute;inset:0;background:#231A0E47;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .25s ease}
+:root[data-theme="dark"] .md-up-back{background:#00000073}
+.md-up.on .md-up-back{opacity:1}
+html:has(#pop.on) .side .rail-fly{display:none}
+.md-up-box{position:fixed;top:16px;bottom:16px;inset-inline-start:100px;width:min(440px,calc(100vw - 116px));display:flex;flex-direction:column;box-sizing:border-box;border-radius:26px;
+  background:linear-gradient(180deg,#FFFFFFB8,#FFFFFF8C);border:1px solid #FFFFFFE6;box-shadow:0 30px 70px -30px var(--shadow);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);color:var(--ink);font:14px/1.45 Tajawal,sans-serif;text-align:start;overflow:hidden}
+:root[data-theme="dark"] .md-up-box{background:linear-gradient(180deg,#FFFFFF21,#FFFFFF19);border-color:#1A140AE6}
+.md-up.on .md-up-box{animation:md-up-in .35s cubic-bezier(.16,1,.3,1)}
+@keyframes md-up-in{from{opacity:0;transform:translateX(calc(var(--dirx,1) * -24px))}to{opacity:1;transform:none}}
+@media (max-width:900px){.md-up-box{inset-inline:10px;top:10px;bottom:10px;width:auto}}
+.md-up-box button{font:inherit;color:inherit;cursor:pointer}
+.md-up-box button:focus-visible,.md-up-box input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.md-up-head{display:flex;gap:10px;align-items:center;padding:16px 18px 12px;flex-shrink:0}
+.md-up-who{flex:1;min-width:0;display:flex;gap:12px;align-items:center;border:0;background:transparent;padding:4px;border-radius:14px;text-align:start}
+@media (hover:hover){.md-up-who:hover{background:var(--hover2)}}
+.md-up-av{width:48px;height:48px;border-radius:15px;background:var(--md-grad,linear-gradient(135deg,#E0AE4A,#EC9364,#CC86AD));display:grid;place-items:center;font:800 16px Cairo,sans-serif;color:#2C2111;flex-shrink:0}
+.md-up-ht{min-width:0;line-height:1.25}.md-up-ht b{display:block;font:800 20px Cairo,sans-serif}.md-up-ht small{font-size:12.5px;color:var(--muted)}
+.md-up-x{width:44px;height:44px;border-radius:14px;border:1px solid #FFFFFFE6;background:#FFFFFFE6;font-size:18px!important;line-height:1;padding:0;flex-shrink:0}
+:root[data-theme="dark"] .md-up-x{background:#1A140AE6;border-color:#1A140AE6}
+.md-up-card{flex:1 1 auto;min-height:0;margin:0 10px;border-radius:18px;background:#FFFFFFF7;border:1px solid #FFFFFF;box-shadow:0 10px 30px -24px #3A2C17;overflow:auto;scrollbar-width:thin;padding:6px 8px 10px}
+:root[data-theme="dark"] .md-up-card{background:#1A140AF7;border-color:#1A140A;box-shadow:0 10px 30px -24px #000000AA}
+.md-up-lbl{display:flex;align-items:center;gap:8px;padding:12px 10px 4px;font:700 11.5px Tajawal,sans-serif;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+[dir="rtl"] .md-up-lbl{letter-spacing:0}
+.md-up-lbl i{margin-inline-start:auto;font-style:normal;letter-spacing:0;text-transform:none;color:var(--accent);font-size:12px;font-weight:800}
+.md-up-lbl.sect{font:800 15px Cairo,sans-serif;text-transform:none;letter-spacing:0;color:var(--ink);padding-top:16px;border-top:1px solid var(--line);margin-top:8px}
+.md-up-cust{font:800 10.5px Cairo,sans-serif;color:var(--accent);border:1px solid currentColor;border-radius:6px;padding:0 6px}
+.md-up-co{display:flex;align-items:center;gap:10px;padding:4px 10px}
+.md-up-co span{flex:1;line-height:1.35}.md-up-co b{display:block;font:800 14.5px Cairo,sans-serif}.md-up-co small{font-size:12.5px;color:var(--muted)}
+.md-up-b{height:34px;padding:0 12px;border-radius:12px;border:1px solid var(--nt-sec-b,#DFDDDA);background:var(--nt-sec,#FFFFFF);font:700 13px Tajawal,sans-serif!important;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.md-up-sws{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;padding:4px 10px}
+.md-up-sws button{aspect-ratio:1;border-radius:50%;border:0;padding:0;max-width:38px;box-shadow:inset 0 0 0 1px #0002;transition:transform .15s ease,box-shadow .15s ease}
+@media (hover:hover){.md-up-sws button:hover{transform:scale(1.08)}}
+.md-up-sws button.on{box-shadow:0 0 0 2px var(--pop),0 0 0 4px var(--ink)}
+@media (max-width:420px){.md-up-sws{grid-template-columns:repeat(4,38px);justify-content:space-between}}
+.md-up-ms{display:inline-flex;padding:3px;border-radius:12px;background:var(--nt-tabs,#F3EFE8);gap:2px;flex-shrink:0}
+.md-up-ms.wide{display:flex;margin:4px 10px}
+.md-up-ms button{height:28px;padding:0 9px;border:0;border-radius:9px;background:transparent;font:700 12px Tajawal,sans-serif!important;color:var(--muted)!important;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.md-up-ms.wide button{flex:1;height:34px;font-size:13px!important}
+.md-up-ms button.on{background:var(--nt-tab-on,#FFFFFF);color:var(--ink)!important;box-shadow:0 1px 3px #0002}
+html.ud-high .md-up-ms button.on{background:var(--ud-on,var(--on));color:var(--on-ink)!important}
+.md-up-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px}
+@media (hover:hover){.md-up-row:hover{background:var(--soft)}}
+.md-up-row.dis{opacity:.45}
+.md-up-lb{flex:1;min-width:0}.md-up-lb b{display:block;font-weight:700;font-size:14px}.md-up-lb small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
+.md-up-sw{width:40px;height:24px;border-radius:99px;border:0;background:#D9D5CF;position:relative;flex-shrink:0;padding:0;transition:background-color .18s}
+:root[data-theme="dark"] .md-up-sw{background:#4A443A}
+.md-up-sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:18px;height:18px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px #0004;transition:inset-inline-start .18s}
+.md-up-sw[aria-checked="true"],:root[data-theme="dark"] .md-up-sw[aria-checked="true"]{background:var(--ud-on,var(--on))}
+.md-up-sw[aria-checked="true"]::after{inset-inline-start:19px}
+:root[data-theme="dark"] .md-up-sw[aria-checked="true"]::after{background:#1A140A}
+.md-up-os{font-size:11px;color:#1A7A4C;font-weight:800}:root[data-theme="dark"] .md-up-os{color:#6BCB97}
+.md-up-lnk{border:0;background:none;padding:0;font:700 12px Tajawal,sans-serif!important;color:var(--accent)!important;text-decoration:underline;text-underline-offset:3px}
+.md-up-lnk:disabled{opacity:.5;cursor:not-allowed}
+.md-up-sl{padding:4px 10px 8px}
+.md-up-sl.dis{opacity:.45}
+.md-up-top{display:flex;align-items:baseline;gap:8px}.md-up-top b{flex:1;font-weight:700;font-size:14px}.md-up-top output{font:800 13px Cairo,sans-serif}
+.md-up-sl small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
+.md-up-sl .why{color:var(--red);font-weight:700}
+.md-up-sl input{width:100%;accent-color:var(--ud-on,var(--on));margin:6px 0 0}
+.md-up-ends{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.md-up-box kbd,.md-kb kbd,.md-toast kbd{font:700 11.5px Tajawal,sans-serif;border:1px solid var(--field-b);border-bottom-width:2px;border-radius:6px;padding:0 6px;background:var(--tile);color:var(--ink);white-space:nowrap;display:inline-block;min-width:20px;text-align:center;direction:ltr;unicode-bidi:isolate}
+.md-up-foot{display:flex;gap:8px;padding:12px 18px 14px;flex-shrink:0}
+.md-up-foot .md-up-b{height:40px}
+.md-up-foot .out{flex:1;justify-content:center;color:var(--red)!important;border-color:color-mix(in srgb,var(--red) 40%,transparent)}
+/* keyboard shortcuts list and toast */
+.md-kb{position:fixed;z-index:127;inset:20px;margin:auto;width:min(760px,calc(100vw - 24px));height:max-content;max-height:calc(100vh - 40px);overflow:auto;border-radius:22px;background:var(--pop);border:1px solid var(--btn-b);box-shadow:0 30px 70px -30px var(--shadow),0 0 0 100vmax #231A0E33;padding:16px 18px;color:var(--ink);font:14px/1.45 Tajawal,sans-serif;text-align:start}
+:root:not([data-theme="dark"]) .md-kb{background:#FFFFFF}
+.md-kb[hidden]{display:none}
+.md-kb button{font:inherit;color:inherit;cursor:pointer}
+.md-kb-hd{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.md-kb-hd h4{margin:0;font:800 18px Cairo,sans-serif;flex:1}
+.md-kb .md-up-x{width:36px;height:36px;border-radius:12px}
+.md-kb-cols{columns:2 300px;column-gap:24px}
+.md-kb-grp{break-inside:avoid;margin-bottom:10px}
+.md-kb-grp h5{margin:8px 0 2px;font:700 11.5px Tajawal,sans-serif;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+[dir="rtl"] .md-kb-grp h5{letter-spacing:0}
+.md-kb-k{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
+.md-kb-ks{display:flex;gap:4px;align-items:center;direction:ltr;flex-shrink:0;font-size:11px;color:var(--muted)}
+.md-kb-note{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.md-toast{position:fixed;z-index:130;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ud-on,var(--on));color:var(--on-ink);font:700 13px Tajawal,sans-serif;padding:8px 14px;border-radius:12px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.md-toast.on{opacity:1}
+.md-toast kbd{background:transparent;color:inherit;border-color:currentColor}
+#stage [data-md-kbrow],#stage [data-md-kbrow]>td{outline:2px solid var(--accent);outline-offset:-2px;background:color-mix(in srgb,var(--md-pa,#E0AE4A) 14%,transparent)!important}
+
+/* MAD-HSD-596 · display settings on every page (shell, engine and D1 boards). Board colours for More/High and AAA come from
+   md-color (MADAR_COLOR.setContrast); these rules are the parts that work through CSS alone. */
+html[data-ud-text="s"] #stage{zoom:.93}
+html[data-ud-text="l"] #stage{zoom:1.14}
+html[data-ud-text="s"] body{font-size:13px}html[data-ud-text="l"] body{font-size:16px}
+html.ud-compact #stage [style*="gap: 14px"]{gap:10px!important}
+html.ud-compact #stage [style*="gap: 12px"]{gap:8px!important}
+html.ud-compact #stage [style*="gap: 10px"]{gap:6px!important}
+html.ud-compact #stage [style*="padding: 16px 18px"]{padding:10px 14px!important}
+html.ud-compact #stage [style*="padding: 18px 22px"]{padding:12px 16px!important}
+html.ud-compact #stage td{padding-top:5px!important;padding-bottom:5px!important}
+/* reduce motion: every animation and transition holds */
+html.ud-rm *,html.ud-rm *::before,html.ud-rm *::after{animation-duration:0s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:0s!important;transition-delay:0s!important;scroll-behavior:auto!important}
+/* contrast toggles */
+html.ud-nograd .bg-aurora,html.ud-nograd .bg-dots{display:none}
+html.ud-nograd body #stage .pri,html.ud-nograd body #stage .ah .pri,html.ud-nograd .md-nt-open{background-image:none!important;background-color:var(--ud-on,var(--on))!important;color:var(--on-ink)!important}
+html.ud-nograd #stage [style*="linear-gradient(90deg, #E0AE4A"],html.ud-nograd #stage [style*="linear-gradient(135deg, #E0AE4A"]{background:var(--ud-on,var(--on))!important;color:var(--on-ink)!important}
+html.ud-nograd .side .rail .me,html.ud-nograd .md-up-av{background:var(--ud-on,var(--on))!important;color:var(--on-ink)!important}
+html.ud-border{--ud-bd:#958E84}html.ud-border.ud-high{--ud-bd:#2E2922}
+:root[data-theme="dark"].ud-border{--ud-bd:#8F877A}:root[data-theme="dark"].ud-border.ud-high{--ud-bd:#E8E1D6}
+html.ud-border #stage [style*="border: 1px solid"],html.ud-border #stage :is(button,input,select,textarea)[style*="border"],html.ud-border .md-qs,html.ud-border .side .rail,html.ud-border .md-up-b{border-color:var(--ud-bd)!important;border-width:1.5px!important}
+html.ud-border.ud-high #stage [style*="border: 1px solid"]{border-width:2px!important}
+html.ud-border #stage :is(td,th){border-bottom:1px solid var(--ud-bd)!important}
+html.ud-ul #stage a,html.ud-ul #stage .lnk,html.ud-ul #stage button[title^="Open"],html.ud-ul #stage [style*="text-decoration: underline"],html.ud-ul .md-up-lnk{text-decoration:underline!important;text-decoration-color:currentColor!important;text-decoration-thickness:1.5px!important;text-underline-offset:3px!important}
+html.ud-bold body{-webkit-text-stroke:.3px currentColor}
+html.ud-focus{--ud-focus:#14100A;--ud-halo:#FFFFFF}:root[data-theme="dark"].ud-focus{--ud-focus:#FFFFFF;--ud-halo:#000000}
+html.ud-focus.ud-high{--ud-halo:#FFD54A}:root[data-theme="dark"].ud-focus.ud-high{--ud-halo:#1A6BFF}
+html.ud-focus :focus-visible{outline:3px solid var(--ud-focus)!important;outline-offset:2px!important;box-shadow:0 0 0 6px var(--ud-halo)!important}
+html.ud-solid [data-md-pane],html.ud-solid .md-up-box,html.ud-solid .md-qp-box,html.ud-solid .md-pp{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#FFFFFF!important}
+:root[data-theme="dark"].ud-solid [data-md-pane],:root[data-theme="dark"].ud-solid .md-up-box,:root[data-theme="dark"].ud-solid .md-qp-box,:root[data-theme="dark"].ud-solid .md-pp{background:#120D07!important}
+html.ud-solid [data-md-pcard],html.ud-solid .md-up-card{background:#FFFFFF!important}:root[data-theme="dark"].ud-solid [data-md-pcard],:root[data-theme="dark"].ud-solid .md-up-card{background:#0B0906!important}
+html.ud-solid [data-md-scrim],html.ud-solid .md-up-back,html.ud-solid .md-qp-back{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(0,0,0,.55)!important}
+html.ud-solid .side .rail,html.ud-solid .side .rail-fly{backdrop-filter:none!important;background:var(--pop)!important}
+/* More / High for the shell itself */
+html.ud-more{--line:#CFCAC2;--field-b:#958E84}:root[data-theme="dark"].ud-more{--line:#4A443A;--field-b:#8F877A}
+html.ud-high{--page:#FFFFFF;--line:#6B655C;--field-b:#2E2922;--glass:#FFFFFF;--glass-b:#2E2922;--btn:#FFFFFF;--btn-b:#2E2922;--tile:#FFFFFF;--float:#FFFFFF;--pop:#FFFFFF;--on:var(--ud-on);--on-ink:#FFFFFF}
+:root[data-theme="dark"].ud-high{--page:#000000;--line:#9A9184;--field-b:#E8E1D6;--glass:#0B0906;--glass-b:#E8E1D6;--btn:#0B0906;--btn-b:#E8E1D6;--tile:#0B0906;--float:#0B0906;--pop:#0B0906;--on-ink:#000000}
+html.ud-high body{background:var(--page)}
+#stage input[aria-invalid="true"]:focus,#stage textarea[aria-invalid="true"]:focus{border-color:#B23434!important;outline:2px solid #B2343433;outline-offset:1px}
+html[data-theme="dark"] #stage input[aria-invalid="true"]:focus,html[data-theme="dark"] #stage textarea[aria-invalid="true"]:focus{border-color:#F08A8A!important}
+html.ud-nograd .side .av{color:var(--on-ink)}
+
+/* MAD-HSD-597 · flat panes get the double-glass standard from the shell (found by app.js: [data-md-flat]); the pane-settings
+   variables (transparency, tint) and Solid panes apply as on every pane. The body becomes the inner card when the board has none. */
+[data-md-flat]{background:var(--mp-f,linear-gradient(180deg,#FFFFFFB8,#FFFFFF8C))!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;border:1px solid var(--mp-fb,#FFFFFFE6)!important;border-radius:26px!important;box-shadow:0 30px 70px -30px var(--shadow)!important}
+:root[data-theme="dark"] [data-md-flat]{border-color:#1A140AE6!important}
+[data-md-flat] [data-md-pcard]{background:var(--mp-card,#FFFFFFF7)!important;border:1px solid #FFFFFF!important;box-shadow:0 10px 30px -24px #3A2C17!important;border-radius:18px!important}
+:root[data-theme="dark"] [data-md-flat] [data-md-pcard]{background:var(--mp-card,#1A140AF7)!important;border-color:#1A140A!important;box-shadow:0 10px 30px -24px #000000AA!important}
+[data-md-cardadd]{margin-inline:10px!important;border-radius:16px!important;overflow:auto}
+html.ud-solid [data-md-flat]{background:#FFFFFF!important;backdrop-filter:none!important}
+:root[data-theme="dark"].ud-solid [data-md-flat]{background:#120D07!important}
+/* the pill the shell adds to panes that had only × (⅓ ⅔ ⅞ | ⚙), placed before × */
+md-pw{order:2;display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:12px;background:#FFFFFF8C;border:1px solid #FFFFFFE6;flex-shrink:0;align-self:center;margin-inline:6px}
+:root[data-theme="dark"] md-pw{background:#FFFFFF19;border-color:#1A140AE6}
+[data-md-x]{order:3}
+md-pwb{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;cursor:pointer;color:#8A847A}
+:root[data-theme="dark"] md-pwb{color:#C0BBB5}
+md-pwb[aria-pressed="true"]{background:#FFFFFF;box-shadow:0 4px 10px -8px #3A2C17;color:var(--ink)}
+:root[data-theme="dark"] md-pwb[aria-pressed="true"]{background:#2A2216}
+md-pwb:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+[dir="rtl"] md-pwb svg{transform:scaleX(-1)}
+@media (max-width:820px){md-pwb,md-pw md-pgd{display:none}}
+@media (min-width:821px){
+  [data-md-pw="third"]{width:calc((100vw - 32px) / 3)!important;max-width:none!important}
+  [data-md-pw="two"]{width:calc((100vw - 32px) * 2 / 3)!important;max-width:none!important}
+  [data-md-pw="seven"]{width:calc((100vw - 32px) * 7 / 8)!important;max-width:none!important}
+}
+/* MAD-HSD-609 · import steps: a step that cannot be opened yet is visibly off (its tooltip says why) */
+#stage aside [role="tab"][aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+/* MAD-HSD-598 · AAA: the header search text and the search placeholders reach 7:1 (#55504A on #FCFCFC) */
+html.ud-aaa:not([data-theme="dark"]) md-qs.md-qs{color:#55504A}
+html.ud-aaa:not([data-theme="dark"]) :is(.md-qp-in input,.side .md-fs input)::placeholder{color:#55504A}
+/* MAD-HSD-599 · the header search text never cuts mid-word: the long hint when it fits, else a short one (app.js measures; both ellipsize) */
+md-qs.md-qs .md-qs-s{display:none}
+md-qs.md-qs.short .md-qs-l{display:none}md-qs.md-qs.short .md-qs-s{display:inline}
+md-qs.md-qs .md-qs-l,md-qs.md-qs .md-qs-s{white-space:nowrap}
+/* MAD-HSD-610 · board columns and triage lanes page with a compact pager (never "show more") */
+#stage .md-cpg-b:disabled{opacity:.4;cursor:default}
+/* MAD-HSD-610 · the sort in the list's own toolbar (no filter card): a compact segment that never wraps */
+#stage .md-chips>dc-g>[data-md-sortbar],#stage .md-chips>[data-md-sortbar]{flex-shrink:0;display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:#F1EFEC}
+/* MAD-HSD-600 · the page switch tab already showing: it gives a small pulse (and a toast, app.js) instead of doing nothing */
+#stage .v2cmp button[aria-pressed="true"]{cursor:default}
+#stage .v2cmp button.md-pulse{animation:md-pulse .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes md-pulse{0%{transform:scale(1)}40%{transform:scale(.94)}100%{transform:scale(1)}}
+/* MAD-HSD-610 · rule 6: table rows keep the table's minimum width (columns never squeeze), the card scrolls sideways */
+#stage .scroll:has(> .thead) [data-md-row]{min-width:var(--md-gmin,0)}
+/* MAD-HSD-600 · a flat pane whose body is several parts: the inner card is drawn behind them (md-pcard, placed by app.js) */
+md-pcard{position:absolute;inset-inline:10px;z-index:-1;border-radius:16px;background:var(--mp-card,#FFFFFFF7);border:1px solid #FFFFFF;box-shadow:0 10px 30px -24px #3A2C17;pointer-events:none}
+:root[data-theme="dark"] md-pcard{background:var(--mp-card,#1A140AF7);border-color:#1A140A;box-shadow:0 10px 30px -24px #000000AA}
+html.ud-solid md-pcard{background:#FFFFFF}:root[data-theme="dark"].ud-solid md-pcard{background:#0B0906}
+/* sys profile: the mobile field keeps its whole number beside the Verified badge in Arabic */
+[dir="rtl"] #stage #pf-mob{text-align:right;padding-left:96px!important}
+/* MAD-HSD-626 · dark: a layout tab that is not available for this list still reads (4.5:1 or more on the glass), dimmer than the others */
+html.md-dark #stage .md-titlerow [role="tab"][aria-disabled="true"]{color:#A9A39A!important}

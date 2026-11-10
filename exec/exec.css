@@ -1,0 +1,254 @@
+/* MAD-EXEC · Madar executive dashboards (اللوحات التنفيذية) — tokens and the Madar skin
+   Tokens follow the Madar D1 dashboard (hm/Dashboard): light and dark from the palette deep / mid / a / b / c that the shell
+   puts on <html> (--md-pdeep, --md-pmid, --md-pa, --md-pb, --md-pc), so every palette and the dark mode apply.
+   exec/dashboards.css (generated) uses only these tokens for colour. */
+
+.ex-root{
+  --x-deep:var(--md-pdeep,#3A2C17);--x-mid:var(--md-pmid,#8A6424);--x-a:var(--md-pa,#E0AE4A);--x-b:var(--md-pb,#CC86AD);--x-cc:var(--md-pc,#EC9364);
+  --x-surface:#FFFFFF;
+  --x-soft:color-mix(in srgb,var(--x-deep) 5%,#FFFFFF);
+  --x-border:color-mix(in srgb,var(--x-deep) 12%,#FFFFFF);
+  --x-glass:#FFFFFF8C;--x-glass-b:#FFFFFFCC;--x-input:#FFFFFFB3;
+  --x-text:var(--x-deep);
+  --x-muted:color-mix(in srgb,var(--x-deep) 45%,#8A8A8A);
+  --x-accent:var(--x-mid);
+  --x-tile:color-mix(in srgb,var(--x-mid) 13%,#FFFFFF);
+  --x-pill:var(--x-mid);--x-pill-ink:#FFFFFF;
+  --x-c1:var(--x-mid);--x-c2:var(--x-a);--x-c3:color-mix(in srgb,var(--x-deep) 38%,#FFFFFF);--x-c4:var(--x-b);
+  --x-tint:var(--x-deep);
+  --x-ok:#1A7A4C;--x-ok-bg:#E3F4EA;--x-warn:#8A5E00;--x-warn-bg:#FBF0D5;--x-bad:#B23434;--x-bad-bg:#FBE4E4;--x-info:#2160B0;--x-info-bg:#E2EDFB;
+  --x-shadow:#231A0E;
+  --x-silk:var(--md-silk,linear-gradient(90deg,#7A5219 0%,#9C4F2C 52%,#6B3760 100%));
+  --x-grad:var(--md-grad,linear-gradient(90deg,#E0AE4A,#EC9364,#CC86AD));
+  /* the prototype's own variables, for the inline styles that still read them */
+  --teal:var(--x-c1);--dark:var(--x-text);--ink:var(--x-text);--muted:var(--x-muted);--line:var(--x-border);--bg:var(--x-soft);
+  --green:var(--x-ok);--amber:var(--x-warn);--red:var(--x-bad);--gold:var(--x-c2)
+}
+html[data-theme="dark"] .ex-root{
+  --x-surface:color-mix(in srgb,var(--x-deep) 45%,#000000);
+  --x-soft:color-mix(in srgb,var(--x-deep) 60%,#000000);
+  --x-border:color-mix(in srgb,var(--x-surface) 86%,#FFFFFF);
+  --x-glass:#FFFFFF0F;--x-glass-b:#FFFFFF1F;--x-input:#FFFFFF0A;
+  --x-text:#EDEFEE;
+  --x-muted:color-mix(in srgb,#FFFFFF 68%,var(--x-deep));
+  --x-accent:var(--x-a);
+  --x-tile:color-mix(in srgb,var(--x-a) 20%,var(--x-surface));
+  --x-pill:var(--x-a);--x-pill-ink:var(--x-deep);
+  --x-c1:var(--x-a);--x-c2:var(--x-b);--x-c3:color-mix(in srgb,var(--x-deep) 45%,#FFFFFF);--x-c4:color-mix(in srgb,var(--x-a) 55%,#FFFFFF);
+  --x-tint:#EDEFEE;
+  --x-ok:#5FD39A;--x-ok-bg:#5FD39A22;--x-warn:#F2C14E;--x-warn-bg:#F2C14E22;--x-bad:#FF8A8A;--x-bad-bg:#FF8A8A22;--x-info:#7DB5FF;--x-info-bg:#7DB5FF22;
+  --x-shadow:#000000;
+  color-scheme:dark
+}
+
+/* ---------------------------------------------------------------- page */
+.ex-root{background:transparent!important;color:var(--x-text);font:15px/1.5 Tajawal,system-ui,sans-serif;padding:16px;min-height:100%;position:relative}
+.ex-wrap{display:flex;flex-direction:column;gap:18px;min-width:0}
+.ex-root .page{max-width:none;margin:0;padding:0;min-width:0}
+.ex-root .ex-main{min-width:0}
+
+/* ---------------------------------------------------------------- header (as the Madar dashboard) */
+.ex-root .x-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px;padding-inline:24px 14px;border-radius:20px;background:var(--x-glass);border:1px solid var(--x-glass-b);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);position:relative;z-index:5;animation:x-rise .75s cubic-bezier(.2,.7,.2,1) .1s backwards}
+.ex-root .x-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ex-root .x-tt h1{margin:0;font:800 24px/1.2 Cairo,sans-serif;color:var(--x-text)}
+.ex-root .x-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:0 6px;font-size:13px;color:var(--x-muted)}
+.ex-root .x-crumb a{color:inherit;text-decoration:none}.x-crumb a:hover{color:var(--x-accent)}
+.ex-root .x-crumb i{font-style:normal;opacity:.7}
+.ex-root .x-crumb b{font-weight:500;color:inherit}
+.ex-root .x-crumb em{font-style:normal}.x-crumb em::before{content:"·";margin-inline:2px 8px}
+.ex-root .x-tools{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto;justify-content:flex-end}
+.ex-root .x-ib{width:44px;height:44px;padding:0;flex-shrink:0;border-radius:12px;border:1px solid var(--x-border);background:var(--x-input);color:var(--x-text);display:flex;align-items:center;justify-content:center;cursor:pointer;font:700 15px Cairo,sans-serif;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ex-root .x-lang{width:auto;padding-inline:14px;font:700 14px Tajawal,sans-serif}
+.ex-root .x-ib:hover{transform:translateY(-2px)}.x-ib:active{transform:translateY(1px) scale(.95);transition-duration:.08s}
+.ex-root .x-ib:focus-visible,.ex-root .x-me:focus-visible,.ex-root .x-tabs a:focus-visible{outline:2px solid var(--x-accent);outline-offset:2px}
+.ex-root .x-who{position:relative;flex-shrink:0}
+.ex-root .x-me{display:flex;align-items:center;gap:10px;padding:2px 4px;padding-inline-start:6px;border:0;background:none;color:var(--x-text);cursor:pointer;border-radius:14px;text-align:start}
+.ex-root .x-me:hover{background:var(--x-glass)}
+.ex-root .x-av{width:40px;height:40px;border-radius:50%;background:var(--x-tile);color:var(--x-accent);display:flex;align-items:center;justify-content:center;font:800 15px Cairo,sans-serif;flex-shrink:0}
+.ex-root .x-mt{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.ex-root .x-mt b{font-weight:700;font-size:14px;white-space:nowrap}
+.ex-root .x-mt small{font-size:12px;color:var(--x-muted);white-space:nowrap;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.ex-root .x-chev{color:var(--x-muted);display:flex;transition:rotate .2s}
+.ex-root .x-me[aria-expanded="true"] .x-chev{rotate:180deg}
+.ex-root .x-pop{position:absolute;inset-inline-end:0;top:calc(100% + 10px);width:310px;padding:8px;border-radius:20px;background:var(--x-glass);border:1px solid var(--x-glass-b);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);box-shadow:0 30px 60px -28px color-mix(in srgb,var(--x-shadow) 45%,transparent);z-index:40}
+html[data-theme="dark"] .ex-root .x-pop{background:color-mix(in srgb,var(--x-surface) 92%,transparent)}
+.ex-root .x-pop-h{display:flex;align-items:center;gap:10px;padding:8px 10px 10px}
+.ex-root .x-pop-h b{display:block;font:800 15px Cairo,sans-serif}.x-pop-h small{font-size:12.5px;color:var(--x-muted)}
+.ex-root .x-pop-s{background:var(--x-surface);border-radius:15px;padding:10px;margin-top:6px;display:flex;flex-direction:column;gap:4px}
+.ex-root .x-pop-l{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--x-muted);font-weight:700;padding:0 4px 4px}
+.ex-root .x-pop-l svg{color:var(--x-accent)}
+.ex-root .x-opt{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:11px;cursor:pointer;font-size:14px}
+.ex-root .x-opt:hover{background:var(--x-soft)}
+.ex-root .x-opt.on{background:var(--x-tile)}
+.ex-root .x-opt input{position:absolute;opacity:0;pointer-events:none}
+.ex-root .x-opt:has(input:focus-visible){outline:2px solid var(--x-accent);outline-offset:1px}
+.ex-root .x-rd{width:20px;height:20px;border-radius:7px;border:1.5px solid var(--x-border);display:grid;place-items:center;flex-shrink:0;color:var(--x-pill-ink)}
+.ex-root .x-opt.on .x-rd{background:var(--x-pill);border-color:var(--x-pill)}
+.ex-root .x-ot{display:flex;flex-direction:column;line-height:1.3}.x-ot b{font-weight:700}.x-ot small{font-size:12px;color:var(--x-muted)}
+.ex-root .x-sel{display:flex;flex-direction:column;gap:4px;padding:6px 10px 2px;font-size:12.5px;color:var(--x-muted)}
+.ex-root .x-sel select{height:38px;border-radius:11px;border:1px solid var(--x-border);background:var(--x-soft);color:var(--x-text);font:500 14px Tajawal,sans-serif;padding:0 10px}
+.ex-root .x-sel select:disabled{opacity:.5}
+.ex-root .x-pop-f{font-size:12px;color:var(--x-muted);padding:10px 10px 4px}
+
+/* ---------------------------------------------------------------- section tabs (as the Madar dashboard tabs) */
+.ex-root .x-tabs{display:flex;gap:6px;padding:6px;border-radius:16px;background:var(--x-glass);border:1px solid var(--x-glass-b);align-self:flex-start;max-width:100%;overflow-x:auto;scrollbar-width:none;position:sticky;top:12px;z-index:4;-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);animation:x-rise .75s cubic-bezier(.2,.7,.2,1) .2s backwards}
+.ex-root .x-tabs[hidden]{display:none}
+.ex-root .x-tabs a{font:700 15.5px Tajawal,sans-serif;padding:0 18px;height:40px;border-radius:11px;display:flex;align-items:center;white-space:nowrap;color:var(--x-muted);text-decoration:none;transition:background-color .25s}
+html[lang="en"] .ex-root .x-tabs a{font-size:14.5px}
+.ex-root .x-tabs a:hover{background:rgba(128,128,128,.12)}
+.ex-root .x-tabs a[aria-current="true"]{background:var(--x-pill);color:var(--x-pill-ink)}
+.ex-root .x-tabs a[hidden]{display:none}
+
+@keyframes x-rise{from{opacity:0;transform:translateY(16px) scale(.985);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.ex-root .x-head,.ex-root .x-tabs{animation:none}}
+
+/* ================================================================ the Madar skin over the dashboards' own layout */
+/* cards: the Madar double frame — a glass rim (6px) round the white surface, with the glass border outside */
+.ex-root :is(.panel,.widget,.selectionpanel,.journeypanel,.city,.ticketPanel,.ticketKpi,.ktStrip>div,.ticketFilters,.saService,.esItem,.scFlow,.saHero,.kpi){
+  border:6px solid var(--x-glass)!important;border-radius:20px!important;background-clip:padding-box!important;
+  box-shadow:0 0 0 1px var(--x-glass-b)!important;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .4s ease!important}
+.ex-root :is(.ticketKpi,.ktStrip>div,.saService,.esItem,.kpi,.city,.widget):hover{transform:translateY(-4px);box-shadow:0 0 0 1px var(--x-glass-b),0 36px 70px -34px color-mix(in srgb,var(--x-shadow) 38%,transparent)!important;filter:none}
+.ex-root :is(.panel,.ticketPanel,.journeypanel,.selectionpanel,.ticketFilters,.scFlow,.saHero):hover{box-shadow:0 0 0 1px var(--x-glass-b),0 30px 60px -38px color-mix(in srgb,var(--x-shadow) 30%,transparent)!important}
+/* emphasis cards: the Madar silk, white type */
+.ex-root :is(.saHero,.ticketKpi.featured,.ticketKpi.taskFeatured,.kpi.emphasis){background:var(--x-silk) padding-box!important;color:#fff!important}
+.ex-root :is(.saHero,.ticketKpi.featured,.ticketKpi.taskFeatured,.kpi.emphasis) :is(h2,h3,b,strong,span,small,label,p,em,i):not(.saStatus):not([class*="Badge"]):not([class*="badge"]){color:inherit!important}
+.ex-root :is(.saHero,.ticketKpi.featured,.ticketKpi.taskFeatured,.kpi.emphasis) :is(small,p,label){opacity:.86}
+.ex-root :is(.saHero,.ticketKpi.featured,.ticketKpi.taskFeatured) svg{color:#fff}
+/* a grouped area (holy sites): a glass shelf with its cards on it */
+.ex-root .sacredwrap{background:var(--x-glass)!important;border:1px solid var(--x-glass-b)!important;border-radius:24px!important;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+/* the cities: picked = accent ring */
+.ex-root .city[aria-pressed=true]{box-shadow:0 0 0 2px var(--x-accent)!important;background-color:var(--x-surface)!important}
+.ex-root .city[aria-pressed=true]:after{display:none}
+.ex-root .city .tick{background:var(--x-pill)!important;color:var(--x-pill-ink)!important;border-color:var(--x-pill)!important}
+
+/* type: Cairo for titles and figures, Tajawal for the rest */
+.ex-root :is(h1,h2,h3){font-family:Cairo,Tajawal,sans-serif!important;font-weight:800!important;color:var(--x-text)}
+.ex-root .sectionline h2{font-size:20px!important;display:flex;align-items:center;gap:10px}
+.ex-root .sectionline>span{font-size:13.5px;color:var(--x-muted)}
+.ex-root .sectionnum{font:800 13px Cairo,sans-serif!important;color:var(--x-accent)!important;background:var(--x-tile)!important;border:0!important;border-radius:9px!important;padding:4px 8px!important;font-style:normal}
+.ex-root :is(.ph h2,.ticketPanelHead h2,.journeyheading h2,.widget .ph h2){font-size:17px!important;line-height:1.4!important}
+.ex-root :is(.ph p,.ticketPanelHead p,.journeyheading p){font-size:13px!important;color:var(--x-muted)}
+/* the page intro (executive heading and every module's heading) */
+.ex-root :is(#overview>.head,.modulePageHeading){margin:2px 2px 18px!important;padding:0!important;align-items:flex-end}
+.ex-root :is(#overview>.head h1,.modulePageHeading h1){font-size:24px!important;line-height:1.3!important;margin:4px 0 6px!important}
+.ex-root :is(#overview>.head p,.modulePageHeading p){font-size:14px!important;color:var(--x-muted)!important;line-height:1.7}
+.ex-root .eyebrow{font:700 13px Tajawal,sans-serif!important;color:var(--x-accent)!important;letter-spacing:0!important}
+
+/* buttons */
+.ex-root .btn{height:42px;padding:0 16px!important;border-radius:12px!important;border:1px solid var(--x-border)!important;background:var(--x-input)!important;color:var(--x-text)!important;font:700 14px Tajawal,sans-serif!important;gap:8px!important;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ex-root .btn:hover{transform:translateY(-2px);filter:none}
+.ex-root .btn.primary{background:var(--x-pill)!important;border-color:var(--x-pill)!important;color:var(--x-pill-ink)!important}
+.ex-root .btn .icon,.ex-root .btn svg{width:18px;height:18px}
+.ex-root .headtools,.ex-root .moduleActions,.ex-root .ticketHeadTools{gap:10px!important}
+/* tabs inside cards: Madar pills */
+.ex-root .tabbar{gap:6px!important;flex-wrap:wrap}
+.ex-root .tabbar button{border:0!important;border-radius:999px!important;padding:6px 14px!important;background:transparent;color:var(--x-muted);font:500 14px Tajawal,sans-serif!important;transition:background-color .18s,color .18s}
+.ex-root .tabbar button:hover{background:rgba(128,128,128,.12);filter:none}
+.ex-root .tabbar button.active{background:var(--x-tile)!important;color:var(--x-accent)!important;font-weight:700!important}
+/* filter chips */
+.ex-root .chip{border-radius:12px!important;border-color:var(--x-border)!important;background:var(--x-surface)!important;transition:transform .12s,background-color .18s}
+.ex-root .chip:hover{transform:translateY(-1px);filter:none}
+.ex-root .chip[aria-pressed=true]{background:var(--x-pill)!important;border-color:var(--x-pill)!important;color:var(--x-pill-ink)!important}
+.ex-root .chip[aria-pressed=true] *{color:inherit!important}
+.ex-root .flagimg{border-radius:5px;box-shadow:0 0 0 1px color-mix(in srgb,var(--x-tint) 10%,transparent)}
+/* fields */
+.ex-root :is(select,input[type=search],input[type=text],input[type=date],.search){min-height:40px;border-radius:12px!important;border:1px solid var(--x-border)!important;background-color:var(--x-soft)!important;color:var(--x-text)!important;font:500 14px Tajawal,sans-serif!important;padding-inline:12px!important}
+.ex-root :is(select,input,.search):focus-visible{outline:0!important;border-color:var(--x-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--x-accent) 22%,transparent)}
+.ex-root :is(.ticketFilters,.ktFilters) label{font-size:12.5px!important;color:var(--x-muted)!important;font-weight:700}
+html[data-theme="dark"] .ex-root select option{background:var(--x-surface);color:var(--x-text)}
+/* the switchers with arrows (city, project, direction) */
+.ex-root .carousel{background:var(--x-soft)!important;border-radius:14px!important;padding:5px!important;border:0!important}
+.ex-root .carousel button{width:30px!important;height:30px!important;border-radius:10px!important;background:var(--x-surface)!important;color:var(--x-text);box-shadow:0 1px 0 var(--x-border)}
+.ex-root .carousel span{font:700 14px Tajawal,sans-serif!important}
+/* tags and statuses: Madar pills */
+.ex-root :is(.tag,.smallTag,.sacredbadge,.countbadge){border:0!important;border-radius:999px!important;background:var(--x-tile)!important;color:var(--x-accent)!important;font:700 12px Tajawal,sans-serif!important;padding:5px 11px!important}
+.ex-root :is(.pill,.saStatus,.saType){border-radius:999px!important;padding:4px 10px!important;font:700 12px Tajawal,sans-serif!important}
+/* tables */
+.ex-root table{border-collapse:separate;border-spacing:0}
+.ex-root th{background:var(--x-soft)!important;color:var(--x-muted)!important;font:700 12.5px Tajawal,sans-serif!important;border:0!important}
+.ex-root th:first-child{border-start-start-radius:12px;border-end-start-radius:12px}
+.ex-root th:last-child{border-start-end-radius:12px;border-end-end-radius:12px}
+.ex-root td{border-bottom:1px solid var(--x-border)!important;font-size:14px}
+.ex-root tbody tr:hover td{background:color-mix(in srgb,var(--x-tint) 3%,transparent)}
+/* progress tracks */
+.ex-root .track{border-radius:999px!important;background:var(--x-soft)!important;overflow:hidden}
+.ex-root .track i{border-radius:999px!important}
+/* nested tiles keep the Madar inner radius */
+.ex-root :is(.journeyitem,.centercard,.mini,.prep,.detailstat,.threetiles>div,.widgetstats>div,.incidentgrid>*){border-radius:16px!important}
+.ex-root .journeyitem{border-color:var(--x-border)!important}
+.ex-root .centercard{border-color:var(--x-border)!important}
+.ex-root .scopebar{font-size:13px;color:var(--x-muted)}
+.ex-root .reset{color:var(--x-accent)!important;font-weight:700}
+.ex-root .liveDot{background:var(--x-accent)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--x-accent) 22%,transparent)!important}
+.ex-root .footnote{font-size:13px;color:var(--x-muted);margin-top:18px}
+.ex-root .accessNote{border-radius:14px!important;border:1px solid color-mix(in srgb,var(--x-a) 40%,transparent)!important;background:color-mix(in srgb,var(--x-a) 14%,var(--x-surface))!important;color:var(--x-warn)!important;font-size:13px!important;padding:10px 14px!important}
+.ex-root .accessNote span{color:var(--x-muted)!important}
+.ex-root .toast{border-radius:14px!important;background:var(--x-text)!important;color:var(--x-surface)!important;font:700 14px Tajawal,sans-serif!important;padding:12px 18px!important;box-shadow:0 20px 40px -18px color-mix(in srgb,var(--x-shadow) 50%,transparent)}
+.ex-root .footer{display:none!important}
+/* icon tiles: as the Madar KPI tiles (40px, tile colour, accent line icon) */
+.ex-root .ticketKpiIcon{width:38px!important;height:38px!important;border-radius:12px!important;background:var(--x-tile)!important;color:var(--x-accent)!important;display:grid!important;place-items:center;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.ex-root .ticketKpiIcon .icon{width:19px;height:19px}
+.ex-root .ticketKpi:hover .ticketKpiIcon{transform:rotate(-8deg) scale(1.08)}
+.ex-root :is(.ticketKpi.featured,.ticketKpi.taskFeatured) .ticketKpiIcon{background:#FFFFFF26!important;color:#fff!important}
+.ex-root .widget .iconbox{width:36px!important;height:36px!important;border-radius:12px!important;background:var(--x-tile)!important;color:var(--x-accent)!important}
+.ex-root .ticketKpiNumber{font-family:Cairo,Tajawal,sans-serif!important;font-weight:800!important}
+.ex-root :is(button,select,input,tr,a,[tabindex]):focus-visible{outline:2px solid var(--x-accent)!important;outline-offset:2px}
+/* small windows: the header wraps (title row, then the tools), the user keeps the avatar only */
+@media (max-width:900px){
+  .ex-root{padding:12px}
+  .ex-root .x-head{flex-wrap:wrap;padding:12px 14px;gap:12px}
+  .ex-root .x-tt{flex:1 1 100%}
+  .ex-root .x-tt h1{font-size:21px}
+  .ex-root .x-tools{flex:1 1 100%;flex-wrap:nowrap;justify-content:flex-start;gap:8px}
+  .ex-root .x-mt,.ex-root .x-chev{display:none}
+  .ex-root .x-who{margin-inline-start:auto}
+  .ex-root .x-ib{width:40px;height:40px}
+  .ex-root .x-lang{width:auto}
+  .ex-root .x-pop{position:fixed;inset-inline:12px;top:auto;width:auto;max-height:75vh;overflow:auto}
+  .ex-root .x-tabs{top:6px}
+  .ex-root :is(#overview>.head h1,.modulePageHeading h1){font-size:21px!important}
+}
+
+/* ================================================================ the detail popup: a Madar side pane (as the notifications and record panes) */
+.ex-root{--x-pane1:#FFFFFFB8;--x-pane2:#FFFFFF8C;--x-pane-b:#FFFFFFE6;--x-card:#FFFFFFF7;--x-card-b:#FFFFFF;--x-x:#FFFFFFE6;--x-scrim:#231A0E47}
+html[data-theme="dark"] .ex-root{--x-pane1:#FFFFFF21;--x-pane2:#FFFFFF19;--x-pane-b:color-mix(in srgb,var(--x-surface) 90%,transparent);--x-card:color-mix(in srgb,var(--x-surface) 97%,transparent);--x-card-b:var(--x-surface);--x-x:color-mix(in srgb,var(--x-surface) 90%,transparent);--x-scrim:#00000073}
+.ex-root dialog.x-pane{position:fixed;inset:16px;inset-inline-start:auto;margin:0;width:min(620px,calc(100vw - 32px));max-width:none;height:auto;max-height:none;padding:0;
+  border-radius:26px!important;border:1px solid var(--x-pane-b)!important;background:linear-gradient(180deg,var(--x-pane1),var(--x-pane2))!important;
+  box-shadow:0 30px 70px -30px var(--x-shadow)!important;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);color:var(--x-text);font:14px/1.5 Tajawal,sans-serif;overflow:hidden}
+.ex-root dialog.x-pane[open]{display:flex;flex-direction:column;animation:x-pane-in .35s cubic-bezier(.16,1,.3,1)}
+.ex-root dialog.x-pane.x-wide{width:min(940px,calc(100vw - 32px))}
+.ex-root dialog.x-pane::backdrop{background:var(--x-scrim);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@keyframes x-pane-in{from{opacity:0;transform:translateX(calc(var(--dirx,1) * 24px))}to{opacity:1;transform:none}}
+html[dir="ltr"] .ex-root dialog.x-pane{--dirx:1}
+.ex-root .x-pane-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px 12px;flex-shrink:0}
+.ex-root .x-pane-tt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px;line-height:1.3}
+.ex-root .x-pane-tt .eyebrow{font:500 12.5px Tajawal,sans-serif!important;color:var(--x-muted)!important;margin:0!important}
+.ex-root .x-pane-tt h2{margin:0!important;font:800 20px/1.35 Cairo,sans-serif!important;color:var(--x-text)}
+.ex-root .x-pane-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ex-root .x-pane-chips>*{margin:0!important;border-radius:999px!important;padding:3px 10px!important;font:700 12px Tajawal,sans-serif!important;background:var(--x-tile);color:var(--x-accent)}
+.ex-root .x-pane-chips>[style*="color"]{background:color-mix(in srgb,currentColor 12%,var(--x-card))}
+.ex-root button.x-pane-x{float:none!important;width:44px!important;height:44px!important;flex-shrink:0;border-radius:14px!important;border:1px solid var(--x-pane-b)!important;background:var(--x-x)!important;color:var(--x-text)!important;display:grid!important;place-items:center;padding:0!important;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ex-root button.x-pane-x:hover{transform:translateY(-2px);filter:none}
+.ex-root .x-pane-card{flex:1 1 auto;min-height:0;margin:0 10px 10px;display:flex;flex-direction:column;border-radius:18px;background:var(--x-card);border:1px solid var(--x-card-b);box-shadow:0 10px 30px -24px var(--x-shadow);overflow:hidden}
+.ex-root #detailBody{flex:1 1 auto;min-height:0;overflow:auto;padding:16px 20px 20px;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--x-tint) 22%,transparent) transparent}
+.ex-root #detailBody>:first-child{margin-top:0!important}
+.ex-root #detailBody>:last-child{margin-bottom:0!important}
+.ex-root #detailBody h3{font:800 16px/1.4 Cairo,sans-serif!important;margin:20px 0 10px!important;color:var(--x-text)}
+.ex-root #detailBody p{font-size:14px;color:var(--x-muted)}
+/* fields: soft tiles in two columns, as the Madar record pane */
+.ex-root #detailBody .ticketDetailGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:0 0 6px}
+.ex-root #detailBody .ticketDetailGrid>div{background:var(--x-soft)!important;border:0!important;border-radius:12px!important;padding:10px 14px!important;font-size:14px;min-width:0}
+.ex-root #detailBody .ticketDetailGrid small{font-size:12.5px!important;color:var(--x-muted)!important;margin-bottom:3px!important}
+.ex-root #detailBody .ticketDetailGrid b{font-size:14.5px!important;font-weight:700;line-height:1.5!important;overflow-wrap:anywhere}
+.ex-root #detailBody .detailmetrics{gap:8px!important;margin:0 0 14px!important;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))!important}
+.ex-root #detailBody .detailmetrics div{background:var(--x-soft)!important;border-radius:14px!important;padding:12px 14px!important}
+.ex-root #detailBody .detailmetrics b{font:800 22px/1.2 Cairo,sans-serif!important;color:var(--x-text)}
+.ex-root #detailBody .detailmetrics small{font-size:12.5px!important;margin-top:4px!important}
+.ex-root #detailBody .detailrow{padding:11px 2px!important;border-bottom:1px solid var(--x-border)!important;font-size:14px!important;gap:12px}
+.ex-root #detailBody .dialognote{border-radius:12px!important;background:var(--x-soft)!important;color:var(--x-muted)!important;font-size:13px!important;padding:12px 14px!important;margin:14px 0 0!important}
+.ex-root #detailBody table{width:100%}
+.ex-root #detailBody :is(.ticketDetailTabs,.tabbar){margin-bottom:12px}
+.ex-root #detailBody>.ticketDetailTabs:first-child{margin-top:-4px!important;padding-top:0!important}
+@media (max-width:900px){.ex-root dialog.x-pane,.ex-root dialog.x-pane.x-wide{inset:12px;width:auto}.ex-root #detailBody .ticketDetailGrid{grid-template-columns:1fr!important}}
+@media (prefers-reduced-motion:reduce){.ex-root dialog.x-pane[open]{animation:none}}
